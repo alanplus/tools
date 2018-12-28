@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <com.android.tools.widget.corner.WLinearLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:background_color="#000000"
+        app:radius="10dp">
+
+        <View
+            android:id="@+id/icon_right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/icon_toast_ios_right" />
+
+        <TextView
+            android:id="@+id/toast_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/icon_right"
+            android:layout_marginTop="5dp"
+            android:text="获得3点学习力"
+            android:textColor="#ffffff"
+            android:textSize="12dp" />
+
+    </com.android.tools.widget.corner.WLinearLayout>
+
+</LinearLayout>

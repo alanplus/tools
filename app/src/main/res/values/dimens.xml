@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="key_borad_item_height">45dp</dimen>
+    <dimen name="key_borad_height">220dp</dimen>
+</resources>

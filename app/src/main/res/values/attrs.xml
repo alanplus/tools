@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WeiCiView">
+        <attr name="radius" format="dimension" />
+        <attr name="background" />
+        <attr name="background_color" format="color|reference" />
+        <attr name="stroke_width" format="dimension" />
+        <attr name="stroke_color" format="reference|color" />
+        <attr name="ripple_color" format="reference|color" />
+        <attr name="radius_l_u" format="dimension" />
+        <attr name="radius_l_d" format="dimension" />
+        <attr name="radius_r_u" format="dimension" />
+        <attr name="radius_r_d" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SmileyLoadingView">
+        <!-- animation duration -->
+        <attr name="duration" format="integer" />
+        <!-- stroke width -->
+        <attr name="strokeWidth" format="dimension" />
+        <!-- stroke color -->
+        <attr name="strokeColor" format="color" />
+        <!-- animation repeat count -->
+        <attr name="animRepeatCount" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="AudioViewStyle">
+        <attr name="audio_type" format="enum">
+            <enum name="audio_type_auto" value="0" />
+            <enum name="audio_type_assets" value="1" />
+            <enum name="audio_type_file" value="2" />
+            <enum name="audio_type_net" value="3" />
+        </attr>
+        <attr name="default_backgroud" format="reference" />
+        <attr name="anim_backgroud" format="reference" />
+        <attr name="loading_drawable" format="reference" />
+        <attr name="anim" format="reference" />
+        <attr name="audio" format="reference|string" />
+        <attr name="anim_type" format="enum">
+            <!-- 背景帧动画 -->
+            <enum name="type_bg" value="0" />
+            <!-- 背景静态 透明度变化 或者属性动画 -->
+            <enum name="type_anim_bg" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="WithBottomLineTextView">
+        <attr name="line_space" format="dimension" />
+        <attr name="bottom_color" format="reference|color" />
+        <attr name="bottom_line_color" format="reference|color" />
+        <attr name="hint_color" format="reference|color" />
+        <attr name="hint" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="FixGridViewGroup">
+        <attr name="padding_x" format="dimension" />
+        <attr name="padding_y" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CommontTitleBarView">
+        <attr name="is_light" format="boolean" />
+        <attr name="bar_title" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ScaleTextView">
+        <attr name="scale_able" format="boolean" />
+        <attr name="from_x" format="float" />
+        <attr name="to_x" format="float" />
+        <attr name="from_y" format="float" />
+        <attr name="to_y" format="float" />
+    </declare-styleable>
+
+</resources>

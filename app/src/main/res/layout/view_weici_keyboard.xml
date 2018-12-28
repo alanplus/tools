@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/key_borad_item_height"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/key_Q"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="q" />
+
+        <TextView
+            android:id="@+id/key_W"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="w" />
+
+        <TextView
+            android:id="@+id/key_E"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="e" />
+
+        <TextView
+            android:id="@+id/key_R"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="r" />
+
+        <TextView
+            android:id="@+id/key_T"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="t" />
+
+        <TextView
+            android:id="@+id/key_Y"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="y" />
+
+        <TextView
+            android:id="@+id/key_U"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="u" />
+
+        <TextView
+            android:id="@+id/key_I"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="i" />
+
+        <TextView
+            android:id="@+id/key_O"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="o" />
+
+        <TextView
+            android:id="@+id/key_P"
+            style="@style/WeiciKeyboardButtonStyle"
+            android:text="p" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/key_borad_item_height"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="horizontal"
+            android:weightSum="9">
+
+            <TextView
+                android:id="@+id/key_A"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="q" />
+
+            <TextView
+                android:id="@+id/key_S"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="w" />
+
+            <TextView
+                android:id="@+id/key_D"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="e" />
+
+            <TextView
+                android:id="@+id/key_F"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="r" />
+
+            <TextView
+                android:id="@+id/key_G"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="t" />
+
+            <TextView
+                android:id="@+id/key_H"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="y" />
+
+            <TextView
+                android:id="@+id/key_J"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="u" />
+
+            <TextView
+                android:id="@+id/key_K"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="i" />
+
+            <TextView
+                android:id="@+id/key_L"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="o" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/key_borad_item_height"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:id="@+id/key_shift"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/bg_key_1_style1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/icon_key_shift" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/key_Z"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="q" />
+
+            <TextView
+                android:id="@+id/key_X"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="w" />
+
+            <TextView
+                android:id="@+id/key_C"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="e" />
+
+            <TextView
+                android:id="@+id/key_V"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="r" />
+
+            <TextView
+                android:id="@+id/key_B"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="t" />
+
+            <TextView
+                android:id="@+id/key_N"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="y" />
+
+            <TextView
+                android:id="@+id/key_M"
+                style="@style/WeiciKeyboardButtonStyle"
+                android:text="u" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/key_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/bg_key_1_style1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/icon_keyboard_del" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/key_borad_item_height"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/key_to_num"
+            style="@style/WeiciKeyboardTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="2"
+            android:text="123" />
+
+        <TextView
+            android:id="@+id/key_to_space"
+            style="@style/WeiciKeyboardTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="4"
+            android:text="空格" />
+
+        <TextView
+            android:id="@+id/key_to_char"
+            style="@style/WeiciKeyboardTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="2"
+            android:text="符" />
+
+        <TextView
+            android:id="@+id/key_to_pre"
+            style="@style/WeiciKeyboardTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="2"
+            android:text="上一题"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/key_to_confirm"
+            style="@style/WeiciKeyboardTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="2"
+            android:text="确定" />
+
+    </LinearLayout>
+
+</LinearLayout>

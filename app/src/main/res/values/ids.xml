@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="vui_titlebar_left_back" type="id" />
+    <item name="vui_titlebar_right_text" type="id" />
+    <item name="vui_titlebar_right_img" type="id" />
+    <item name="scrollview" type="id" />
+    <item name="statusbarutil_fake_status_bar_view" type="id" />
+    <item name="statusbarutil_translucent_view" type="id" />
+
+
+    <item name="vui_dialog_edit_input" type="id" />
+    <item name="vui_dialog_edit_right_icon" type="id" />
+
+    <item name="vui_tab_segment_item_id" type="id" />
+
+    <item name="vui_view_can_not_cache_tag" type="id" />
+
+    <item name="vui_topbar_item_left_back" type="id" />
+
+    <item name="vui_view_offset_helper" type="id" />
+
+    <item name="expand_view_textview" type="id" />
+    <item name="expand_view_iconview" type="id" />
+
+    <!-- Audio Image tag -->
+    <item name="tag_audio_path" type="id" />
+    <item name="tag_audio_type" type="id" />
+
+    <item name="tag_audio_default_bg" type="id" />
+    <!-- tag_anim_type ==1 时 有效 -->
+    <item name="tag_audio_anim_bg" type="id" />
+
+    <item name="tag_audio_anim" type="id" />
+    <item name="tag_anim_type" type="id" />
+    <item name="tag_loading" type="id" />
+
+</resources>
