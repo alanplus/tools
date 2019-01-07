@@ -131,7 +131,7 @@ public class WeiciMediaPlayerHelper implements OnMediaPlayerListener {
     }
 
     private void resetImageView(int hashcode) {
-        if (onStateChangeListener != null) onStateChangeListener.complete(imageView);
+//        if (onStateChangeListener != null) onStateChangeListener.complete(imageView);
         if (null == imageView || hashcode != imageView.hashCode()) return;
         imageView.clearAnimation();
         imageView.setAlpha(1.0f);
@@ -146,6 +146,9 @@ public class WeiciMediaPlayerHelper implements OnMediaPlayerListener {
     @Override
     public void onCompletionListener() {
         if (null != onStateChangeListener) onStateChangeListener.complete(imageView);
+        if (null == imageView) {
+            return;
+        }
         final int i = imageView.hashCode();
         if (weiciMediaplayer.getState() == WeiciMediaplayer.STATE_IDEL) {
             AndroidToolsConfig.androidToolsConfig.getHandler().post(() -> {
@@ -160,6 +163,9 @@ public class WeiciMediaPlayerHelper implements OnMediaPlayerListener {
     @Override
     public void onError() {
         if (null != onStateChangeListener) onStateChangeListener.error(imageView);
+        if (null == imageView) {
+            return;
+        }
         final int i = imageView.hashCode();
         if (weiciMediaplayer.getState() == WeiciMediaplayer.STATE_IDEL) {
             AndroidToolsConfig.androidToolsConfig.getHandler().post(() -> {
