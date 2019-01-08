@@ -4,6 +4,13 @@ import android.graphics.Bitmap;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by Mouse on 2018/10/15.
  */
@@ -37,5 +44,38 @@ public class ViewTools {
         v.buildDrawingCache();
         Bitmap bitmap = v.getDrawingCache();
         return bitmap;
+    }
+
+    /**
+     * 防止重复点击
+     *
+     * @param target
+     * @param listener
+     */
+    public static void preventRepeatedClick(final View target, final View.OnClickListener listener) {
+        if (null == target || listener == null) {
+            return;
+        }
+        RxView.clicks(target).throttleFirst(1, TimeUnit.SECONDS).subscribe(new Observer<Object>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Object value) {
+                listener.onClick(target);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }
