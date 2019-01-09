@@ -40,11 +40,15 @@ public class GlideTools {
      * @param defRes
      */
     public static void setCircleImageUrl(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).placeholder(defRes).dontAnimate().transform(new GlideCircleTransform(activity)).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).placeholder(defRes).dontAnimate().transform(new GlideCircleTransform(activity)).into(imgView);
     }
 
 
@@ -56,11 +60,16 @@ public class GlideTools {
      * @param defRes
      */
     public static void setImageUrl(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).dontAnimate().placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).dontAnimate().placeholder(defRes).into(imgView);
+
     }
 
     /**
@@ -69,7 +78,11 @@ public class GlideTools {
      * @param url
      */
     public static void setImageUrl(Context activity, String url, SimpleTarget<GlideDrawable> simpleTarget) {
-        Glide.with(activity).load(url).dontAnimate().into(simpleTarget);
+        try {
+            Glide.with(activity).load(url).dontAnimate().into(simpleTarget);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
+        }
     }
 
     /**
@@ -80,8 +93,11 @@ public class GlideTools {
      * @param defRes
      */
     public static void setImageUrl(Context activity, ImageView imgView, int imageRes, int defRes) {
+        try {
+            Glide.with(activity).load(imageRes).dontAnimate().placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
 
-        Glide.with(activity).load(imageRes).dontAnimate().placeholder(defRes).into(imgView);
+        }
     }
 
     /**
@@ -91,7 +107,11 @@ public class GlideTools {
      * @param imageRes
      */
     public static void setImageUrl(Context activity, ImageView imgView, int imageRes) {
-        Glide.with(activity).load(imageRes).dontAnimate().into(imgView);
+        try {
+            Glide.with(activity).load(imageRes).dontAnimate().into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
+        }
     }
 
     /**
@@ -102,7 +122,10 @@ public class GlideTools {
      * @param res
      */
     public static void setRoundImageUrl(Context context, ImageView imgView, int res) {
-        Glide.with(context).load(res).transform(new GlideRoundTransform(context, 5)).dontAnimate().into(imgView);
+        try {
+            Glide.with(context).load(res).transform(new GlideRoundTransform(context, 5)).dontAnimate().into(imgView);
+        } catch (Exception ignore) {// 解决：Glide You cannot start a load for a destroyed activity
+        }
     }
 
     /**
@@ -114,19 +137,28 @@ public class GlideTools {
      * @param defRes
      */
     public static void setRoundImageUrl(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).transform(new CenterCrop(activity), new GlideRoundTransform(activity, 5)).dontAnimate().placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).transform(new CenterCrop(activity), new GlideRoundTransform(activity, 5)).dontAnimate().placeholder(defRes).into(imgView);
     }
 
 
     public static Bitmap getBitmap(String url, Context context) throws ExecutionException, InterruptedException {
-        if (TextUtils.isEmpty(url)) {
-            return null;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return Glide.with(context).load(url).asBitmap().into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        return Glide.with(context).load(url).asBitmap().into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+        return null;
     }
 
     /**
@@ -142,11 +174,15 @@ public class GlideTools {
      * @param defRes
      */
     public static void setCircleImageUrlWithAnim(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).placeholder(defRes).transform(new GlideCircleTransform(activity)).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).placeholder(defRes).transform(new GlideCircleTransform(activity)).into(imgView);
     }
 
 
@@ -158,11 +194,15 @@ public class GlideTools {
      * @param defRes
      */
     public static void setImageUrlWithAnim(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).placeholder(defRes).into(imgView);
     }
 
     /**
@@ -173,8 +213,11 @@ public class GlideTools {
      * @param defRes
      */
     public static void setImageUrlWithAnim(Context activity, ImageView imgView, int imageRes, int defRes) {
+        try {
+            Glide.with(activity).load(imageRes).placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
 
-        Glide.with(activity).load(imageRes).placeholder(defRes).into(imgView);
+        }
     }
 
     /**
@@ -185,7 +228,12 @@ public class GlideTools {
      * @param res
      */
     public static void setRoundImageUrlWithAnim(Context context, ImageView imgView, int res) {
-        Glide.with(context).load(res).transform(new GlideRoundTransform(context, 5)).into(imgView);
+        try {
+            Glide.with(context).load(res).transform(new GlideRoundTransform(context, 5)).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
+        }
+
     }
 
     /**
@@ -197,11 +245,16 @@ public class GlideTools {
      * @param defRes
      */
     public static void setRoundImageUrlWithAnim(Context activity, ImageView imgView, String url, int defRes) {
-        if (TextUtils.isEmpty(url)) {
-            imgView.setImageResource(defRes);
-            return;
+        try {
+            if (TextUtils.isEmpty(url)) {
+                imgView.setImageResource(defRes);
+                return;
+            }
+            Glide.with(activity).load(url).transform(new CenterCrop(activity), new GlideRoundTransform(activity, 5)).placeholder(defRes).into(imgView);
+        } catch (Exception e) {// 解决：Glide You cannot start a load for a destroyed activity
+
         }
-        Glide.with(activity).load(url).transform(new CenterCrop(activity), new GlideRoundTransform(activity, 5)).placeholder(defRes).into(imgView);
+
     }
 
     public static void setBackgound(View view, String url) {
