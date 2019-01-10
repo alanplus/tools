@@ -61,4 +61,35 @@ public class FileTools {
         return list;
     }
 
+    public static boolean exist(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return false;
+        }
+        return new File(path).exists();
+    }
+
+    public static boolean move(String src, String dest, boolean delOnExist) {
+        if (TextUtils.isEmpty(src) || TextUtils.isEmpty(dest) || !exist(src)) {
+            return false;
+        }
+        File fileDest = new File(dest);
+        if (!fileDest.exists()) {
+            boolean mkdirs = fileDest.mkdirs();
+            if (!mkdirs) return false;
+        }
+        if (fileDest.isFile()) return false;
+
+        String filename = getFilename(src);
+        String destFilePath = dest.endsWith("/") ? dest + filename : dest + "/" + filename;
+        File destFile = new File(destFilePath);
+        if (destFile.exists()) {
+            if (delOnExist) {
+                destFile.delete();
+            } else {
+                return true;
+            }
+        }
+        return new File(src).renameTo(destFile);
+    }
+
 }
