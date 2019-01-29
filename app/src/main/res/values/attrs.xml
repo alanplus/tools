@@ -50,6 +50,10 @@
         <attr name="bottom_line_color" format="reference|color" />
         <attr name="hint_color" format="reference|color" />
         <attr name="hint" format="string" />
+        <attr name="bottom_gravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="FixGridViewGroup">

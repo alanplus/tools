@@ -86,10 +86,17 @@ public class FileTools {
             if (delOnExist) {
                 destFile.delete();
             } else {
+                new File(src).delete();
                 return true;
             }
         }
         return new File(src).renameTo(destFile);
     }
 
+    public static String join(String path, String name) {
+        if (TextUtils.isEmpty(path)) {
+            return name;
+        }
+        return path.endsWith("/") ? path + name : path + "/" + name;
+    }
 }

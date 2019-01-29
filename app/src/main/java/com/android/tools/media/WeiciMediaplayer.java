@@ -257,7 +257,6 @@ public class WeiciMediaplayer
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-
         if (mMediaPlayer != null) {
             mMediaPlayer.start();
             state = STATE_PLAYING;

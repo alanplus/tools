@@ -71,11 +71,7 @@ public class ApiRequest {
     }
 
     public static ApiResult executeOnPost(ApiBody apiBody) {
-        ApiResult result = new ApiResult(-1);
-        String url = apiBody.URL;
-        String s = OkHttpUtil.getStrByPost(url, apiBody.params);
-        apiBody.parse(s, result);
-        return result;
+        return executeOnPost(apiBody, true);
     }
 
     public static ApiResult executeOnPost(ApiBody apiBody, boolean isencode) {

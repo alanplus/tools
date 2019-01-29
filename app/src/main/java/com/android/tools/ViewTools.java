@@ -3,8 +3,11 @@ package com.android.tools;
 import android.graphics.Bitmap;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxAdapterView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -65,6 +68,39 @@ public class ViewTools {
             @Override
             public void onNext(Object value) {
                 listener.onClick(target);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /**
+     * 防止重复点击
+     *
+     * @param target
+     * @param onItemClickListener
+     */
+    public static void preventRepeatedClick(final ListView target, final AdapterView.OnItemClickListener onItemClickListener) {
+        if (null == target || onItemClickListener == null) {
+            return;
+        }
+        RxAdapterView.itemClicks(target).throttleFirst(1, TimeUnit.SECONDS).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer value) {
+                onItemClickListener.onItemClick(target, null, value, 0);
             }
 
             @Override

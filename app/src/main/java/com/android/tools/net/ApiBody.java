@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.android.tools.AndroidToolsConfig;
+import com.android.tools.tools.AES128Encrypt;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -166,7 +167,26 @@ public class ApiBody {
             return ApiRequest.executeOnPost(apiBody);
         }
 
+        public ApiResult executeOnPostWithAES() {
+            ApiBody body = apiBody.secret();
+            if (null == body) {
+                return new ApiResult(-1);
+            }
+            return ApiRequest.executeOnPost(body, false);
+        }
+
         public void execute(ApiRequest.OnCallBackListener onCallBackListener) {
+            ApiRequest.execute(apiBody, onCallBackListener);
+        }
+
+        public void executeWithAES(ApiRequest.OnCallBackListener onCallBackListener) {
+            ApiBody body = apiBody.secret();
+            if (null == body) {
+                if (null != onCallBackListener) {
+                    onCallBackListener.callBack(new ApiResult(-1));
+                }
+                return;
+            }
             ApiRequest.execute(apiBody, onCallBackListener);
         }
     }
@@ -185,4 +205,18 @@ public class ApiBody {
         return null;
     }
 
+    public ApiBody secret() {
+        if (null == params || params.size() == 0) {
+            return this;
+        }
+        String str = OkHttpUtil.getContentFromMap(params);
+        try {
+            String content = AES128Encrypt.Encrypt(str, "ac14c13680bdf7a0");
+            params.clear();
+            params.put("param", content);
+            return this;
+        } catch (Exception ignore) {
+        }
+        return null;
+    }
 }

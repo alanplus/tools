@@ -1,5 +1,6 @@
 package com.android.tools.net;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
@@ -342,6 +343,33 @@ public class OkHttpUtil {
         return false;
     }
 
+    public static boolean downloadFile(Context context, String url, String name) {
+        File file = createDefaultFile(context);
+        try {
+            Request request = new Request.Builder().url(url).build();
+            FileOutputStream out = new FileOutputStream(file);
+            Response response = mOkHttpClient.newCall(request).execute();
+            if (response == null || !response.isSuccessful()) {
+                return false;
+            }
+            InputStream in = response.body().byteStream();
+            byte[] buf = new byte[2048 * 40];
+            int len = 0;
+            long l = 0;
+            while ((len = in.read(buf)) != -1) {
+                out.write(buf, 0, len);
+                l += len;
+                Log.i("weiciLog", l + "");
+            }
+            out.flush();
+            out.close();
+            File file1 = new File(name);
+            return file1.exists() || file.renameTo(new File(name));
+        } catch (Exception ignore) {
+        }
+        return false;
+    }
+
 
     public static boolean downloadFile(String url, String name, String tempname, String path, OnProgressCallback callback) {
         clearFile(path, tempname);
@@ -393,6 +421,24 @@ public class OkHttpUtil {
             f.mkdirs();
         }
         File file = new File(path, filename);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException ignored) {
+        }
+        return file;
+    }
+
+    private static File createDefaultFile(Context context) {
+        String path = "/data/data/" + context.getPackageName() + "/temp/";
+
+        File f = new File(path);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        File file = new File(path, System.currentTimeMillis() + "download");
         if (file.exists()) {
             file.delete();
         }

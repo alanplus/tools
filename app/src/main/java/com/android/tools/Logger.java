@@ -32,6 +32,27 @@ public class Logger {
         }
     }
 
+    public static void writeFile(String text, String path, String name) {
+        if (!AndroidToolsConfig.androidToolsConfig.isDebug()) return;
+
+        File fileDir = new File(path);
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        File file = new File(FileTools.join(path, name));
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(text);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static final String TAG = "weiciLog";
 
     public static void i(String msg) {
