@@ -32,6 +32,24 @@ public class Logger {
         }
     }
 
+    public static void append(String text) {
+        if (!AndroidToolsConfig.androidToolsConfig.isDebug() || TextUtils.isEmpty(text)) return;
+        String path = Environment.getExternalStorageDirectory().getPath() + "/a.txt";
+        File file = new File(path);
+
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.append(text, 0, text.length());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void writeFile(String text, String path, String name) {
         if (!AndroidToolsConfig.androidToolsConfig.isDebug()) return;
 

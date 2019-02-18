@@ -59,6 +59,12 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         }
     }
 
+    public void stop() {
+        if (null != yxMediaplayer && yxMediaplayer.isPlaying()) {
+            yxMediaplayer.stop();
+        }
+    }
+
     private void resetView() {
         if (null == mView) return;
         mView.clearAnimation();

@@ -25,4 +25,12 @@ public class Test {
 //            e.printStackTrace();
 //        }
     }
+
+    private void testLeci(){
+
+        String string = "中国人abc";
+//        LCHMacUtils.
+
+
+    }
 }

@@ -56,10 +56,20 @@ public class ViewTools {
      * @param listener
      */
     public static void preventRepeatedClick(final View target, final View.OnClickListener listener) {
+        preventRepeatedClick(target, listener, 1000);
+    }
+
+    /**
+     * 防止重复点击
+     *
+     * @param target
+     * @param listener
+     */
+    public static void preventRepeatedClick(final View target, final View.OnClickListener listener, int millisenconds) {
         if (null == target || listener == null) {
             return;
         }
-        RxView.clicks(target).throttleFirst(1, TimeUnit.SECONDS).subscribe(new Observer<Object>() {
+        RxView.clicks(target).throttleFirst(millisenconds, TimeUnit.MILLISECONDS).subscribe(new Observer<Object>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -81,6 +91,7 @@ public class ViewTools {
             }
         });
     }
+
 
     /**
      * 防止重复点击
