@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.android.tools.Logger;
@@ -114,6 +115,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         if (null == tag) return;
         int drawable = (int) tag;
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.rotate);
+        animation.setInterpolator(new LinearInterpolator());
         this.mView.setBackgroundResource(drawable);
         this.mView.startAnimation(animation);
     }

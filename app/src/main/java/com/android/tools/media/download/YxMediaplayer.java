@@ -244,6 +244,11 @@ public class YxMediaplayer
             play(destName, AUDIO_FILE_TYPE_FILE);
             return;
         }
+        if(!AndroidTools.isNetworkAvailable(context)){
+            setState(IMediaStateChangeListener.STATE_ERROR, IMediaStateChangeListener.ERROR_NO_NET);
+            return;
+        }
+
         setState(IMediaStateChangeListener.STATE_LOADING, 0);
         Observable.create((ObservableOnSubscribe<String>) e -> {
             String file = download(name, iDownloadConfig);

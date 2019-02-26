@@ -2,7 +2,6 @@ package com.android.tools.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -79,7 +78,7 @@ public class BaseActivity extends AppCompatActivity {
             if (isNeedTranslateMode()) {
                 onChangeTitlebarColor();
             } else {
-                StatusBarUtil.setStatusBarColor(this, Color.WHITE);
+                StatusBarUtil.setStatusBarColor(this, AndroidToolsConfig.androidToolsConfig.getStatusBarColor());
             }
         }
     }

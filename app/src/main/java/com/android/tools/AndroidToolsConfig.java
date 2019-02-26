@@ -2,6 +2,7 @@ package com.android.tools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 
 import java.io.File;
@@ -24,9 +25,13 @@ public abstract class AndroidToolsConfig {
     public abstract void onErrorCode(int code);
 
     public abstract void onActivityResume(Activity activity);
+
     public abstract void onActivityPause(Activity activity);
+
     public abstract void onActivityCreate(Activity activity);
+
     public abstract void onActivityDestroy(Activity activity);
+
     public abstract void onActivityStop(Activity activity);
 
     public abstract Handler getHandler();
@@ -47,6 +52,10 @@ public abstract class AndroidToolsConfig {
             file.mkdirs();
         }
         return path;
+    }
+
+    public int getStatusBarColor() {
+        return Color.WHITE;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.android.tools.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected View mRoot;
     protected RxManager rxManager;
+
+    protected Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,4 +50,11 @@ public abstract class BaseFragment extends Fragment {
     public void setRxManager(RxManager rxManager) {
         this.rxManager = rxManager;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (Activity) context;
+    }
+
 }
