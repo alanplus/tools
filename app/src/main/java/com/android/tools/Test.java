@@ -22,6 +22,7 @@ public class Test {
 
         try {
             String s = AES128Encrypt.Encrypt(string_abc, "ac14c13680bdf7a0");
+//            s = "34831d3743086a752b3c3a1ef9478bd4b21e6f4b13a95ed3a024ae2d7834df3303d6a73ada04accda4187f5432782eece7582744d683524ba24c5ba493cdc8590d2e839c2a2c85ab250a9a30a86f326f20142a672e8cb038135174ce3a04d6ccb97397dfe2e4d9b4847071f83934b1e4633aa9aa8258193156c984df7aa93b7e42852e99054a924e61c60795fc28af8a457d22fea239f5e8425be0d5ac6b1ff1b311e91ee017fa348b9d8b049ed4bccff3214d13b9a51637bdc4abdea13cc576a9f8369c7a7ce861962dd77a6a258918";
             System.out.println(s);
             System.out.println(s.length());
             String s2 = AES128Encrypt.Decrypt(s, "ac14c13680bdf7a0");

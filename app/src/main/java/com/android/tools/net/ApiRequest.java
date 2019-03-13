@@ -41,8 +41,9 @@ public class ApiRequest {
             else e.onError(new Exception());
         }).compose(RxSchedulers.threadMain()).doOnNext(integer -> onProgressCallback.onProgress(integer[0], integer[1])).doOnComplete(() -> {
             if (null != onProgressCallback) onProgressCallback.onFinish(true);
-        }).doOnError(throwable -> {
+        }).onErrorReturn(throwable -> {
             if (null != onProgressCallback) onProgressCallback.onFinish(false);
+            return new Long[0];
         }).subscribe();
     }
 
