@@ -126,7 +126,8 @@ public class Logger {
             } catch (NoClassDefFoundError e1) {
             }
         }
-        Log.println(priority, tag, info + msg);
+//        Log.println(priority, tag, info + msg);
+        printlnLog(priority, info, tag, msg);
     }
 
     private static void println(String tag, String msg, Throwable e) {
@@ -143,5 +144,22 @@ public class Logger {
             }
         }
         Log.e(tag, info + msg, e);
+    }
+
+    private static void printlnLog(int priority, String info, String tag, String msg) {
+        int segmentSize = 3 * 1024;
+        long length = msg.length();
+        if (length <= segmentSize) {// 长度小于等于限制直接打印
+            Log.println(priority, tag, info + msg);
+        } else {
+            int segmentIndex = 1;
+            while (msg.length() > segmentSize) {// 循环分段打印日志
+                String logContent = msg.substring(0, segmentSize);
+                msg = msg.substring(segmentSize, msg.length());
+                Log.println(priority, tag, info + "segmentIndex:" + segmentIndex++ + ":" + logContent);
+            }
+            if (!TextUtils.isEmpty(msg))
+                Log.println(priority, tag, info + "segmentIndex:" + segmentIndex + ":" + msg);// 打印剩余日志
+        }
     }
 }
