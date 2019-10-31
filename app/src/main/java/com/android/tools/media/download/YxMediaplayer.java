@@ -223,14 +223,15 @@ public class YxMediaplayer
     }
 
     private boolean canPlayByAssets(String name) {
-        AssetManager am = context.getAssets();
-        try {
-            String[] list = am.list("audio");
-            List<String> list1 = Arrays.asList(list);
-            return list1.contains(name);
-        } catch (IOException e) {
-            return false;
-        }
+        return true;
+//        AssetManager am = context.getAssets();
+//        try {
+//            String[] list = am.list("audio");
+//            List<String> list1 = Arrays.asList(list);
+//            return list1.contains(name);
+//        } catch (IOException e) {
+//            return false;
+//        }
     }
 
     public void play(String name, IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
@@ -244,7 +245,17 @@ public class YxMediaplayer
             play(destName, AUDIO_FILE_TYPE_FILE);
             return;
         }
-        if(!AndroidTools.isNetworkAvailable(context)){
+
+        if (TextUtils.isEmpty(iDownloadConfig.getUrl())) {
+            if (canPlayByAssets(name)) {
+                play(name, AUDIO_FILE_TYPE_ASSETS);
+            } else {
+                setState(IMediaStateChangeListener.STATE_ERROR, IMediaStateChangeListener.ERROR_CANNOT_PLAY);
+            }
+            return;
+        }
+
+        if (!AndroidTools.isNetworkAvailable(context)) {
             setState(IMediaStateChangeListener.STATE_ERROR, IMediaStateChangeListener.ERROR_NO_NET);
             return;
         }

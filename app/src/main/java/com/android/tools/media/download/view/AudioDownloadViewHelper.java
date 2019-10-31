@@ -40,7 +40,13 @@ public class AudioDownloadViewHelper implements IAudioDownloadView {
         int animBg = typedArray.getResourceId(R.styleable.AudioViewStyle_anim_backgroud, 0);
         typedArray.recycle();
         if (animBg != 0) view.setTag(R.id.tag_audio_anim_bg, animBg);
-        view.setOnClickListener(v -> onClickEvent());
+        view.setOnClickListener(v -> {
+            if(view instanceof AudioDownloadView){
+                onClickEvent();
+            }else{
+                ((AudioDownloadView) view).onClickEvent();
+            }
+        });
     }
 
     @Override

@@ -60,6 +60,28 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         }
     }
 
+    public void play(View view,String name) {
+        if (mView == view) {
+            if (yxMediaplayer.isPlaying()) {
+                yxMediaplayer.stop();
+            } else {
+                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+            }
+        } else {
+            if (yxMediaplayer.getState() == IMediaStateChangeListener.STATE_IDLE) {
+                this.mView = view;
+                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+            } else {
+                yxMediaplayer.destroy();
+                yxMediaplayer.setiMediaStateChangeListener(null);
+                resetView();
+                this.mView = view;
+                yxMediaplayer = new YxMediaplayer(context);
+                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+            }
+        }
+    }
+
     public void stop() {
         if (null != yxMediaplayer && yxMediaplayer.isPlaying()) {
             yxMediaplayer.stop();
