@@ -235,7 +235,7 @@ public class BottomSheet extends Dialog {
         }
 
         private boolean needToScroll() {
-            int itemHeight = AndroidTools.dip2px(mContext, 56);
+            int itemHeight = AndroidTools.dip2px(56);
             int totalHeight = adapter.getCount() * itemHeight;
             return totalHeight > getListMaxHeight();
         }

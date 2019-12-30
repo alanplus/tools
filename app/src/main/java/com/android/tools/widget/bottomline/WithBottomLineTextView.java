@@ -44,7 +44,7 @@ public class WithBottomLineTextView extends View {
 
     private void init(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WithBottomLineTextView);
-        int i = AndroidTools.dip2px(getContext(), 10);
+        int i = AndroidTools.dip2px(10);
         lineHeight = (int) typedArray.getDimension(R.styleable.WithBottomLineTextView_line_space, i);
         color = typedArray.getColor(R.styleable.WithBottomLineTextView_bottom_color, Color.parseColor("#1A1A1A"));
         lineColor = typedArray.getColor(R.styleable.WithBottomLineTextView_bottom_line_color, color);
@@ -153,7 +153,7 @@ public class WithBottomLineTextView extends View {
         if (null == paint) {
             paint = new TextPaint();
             paint.setAntiAlias(true);
-            paint.setTextSize(AndroidTools.dip2px(getContext(), 17));
+            paint.setTextSize(AndroidTools.dip2px(17));
         }
         paint.setColor(isText ? color : lineColor);
         return paint;

@@ -83,7 +83,7 @@ public class LoadDialogView extends View {
     }
 
     private void init() {
-        W = AndroidTools.dip2px(getContext(), 4);
+        W = AndroidTools.dip2px(4);
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(W);

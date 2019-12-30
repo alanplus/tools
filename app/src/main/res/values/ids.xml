@@ -5,8 +5,8 @@
     <item name="vui_titlebar_right_text" type="id" />
     <item name="vui_titlebar_right_img" type="id" />
     <item name="scrollview" type="id" />
-    <item name="statusbarutil_fake_status_bar_view" type="id" />
-    <item name="statusbarutil_translucent_view" type="id" />
+    <item name="status_bar_view" type="id" />
+    <item name="status_bar_translucent_view" type="id" />
 
 
     <item name="vui_dialog_edit_input" type="id" />

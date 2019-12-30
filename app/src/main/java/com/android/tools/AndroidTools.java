@@ -2,11 +2,14 @@ package com.android.tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
@@ -14,6 +17,8 @@ import android.os.StatFs;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
+import com.android.tools.widget.ToastManager;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -26,16 +31,23 @@ public class AndroidTools {
 
     /**
      * dp转px
-     *
-     * @param context
      * @param dpValue
      * @return
      */
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int dip2px(float dpValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * dp转px
+     * @param dpValue
+     * @return
+     */
+    public static int dip2px(Context context,float dpValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     /**
      * 根据手机的分辨率 px(像素) 转 dp
@@ -114,7 +126,7 @@ public class AndroidTools {
     public static boolean isWifi(Context mContext) {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetInfo != null
                 && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
@@ -177,11 +189,12 @@ public class AndroidTools {
      * @return
      */
     public static String getApplicationName(Context context) {
-        return getSomeApplicationName(context.getPackageName(),context);
+        return getSomeApplicationName(context.getPackageName(), context);
     }
 
     /**
      * 通过包名获取应用名称
+     *
      * @param pkg
      * @param context
      * @return
@@ -198,5 +211,28 @@ public class AndroidTools {
         }
         return null;
     }
+
+    public static String getVersion(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), 0);
+            return info.versionName;
+        } catch (PackageManager.NameNotFoundException nnfe) {
+            return "null";
+        } catch (Exception e) {
+            return "null";
+        }
+    }
+
+    public static void startMarket(Context context) {
+        try {
+            Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+            Intent it = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(it);
+        } catch (Exception e) {
+            ToastManager.getInstance().showToast(context, "没有找到应用市场");
+        }
+    }
+
 
 }

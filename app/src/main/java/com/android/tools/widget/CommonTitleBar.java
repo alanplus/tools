@@ -53,7 +53,7 @@ public class CommonTitleBar extends RelativeLayout {
         title.setTextColor(isLight ? Color.parseColor("#535353") : Color.WHITE);
         title.setText(titleStr);
         imageButtonBack = findViewById(R.id.icon_back);
-        imageButtonBack.setImageResource(isLight ? R.drawable.icon_titlebar_back : R.drawable.icon_titlebar_back_light);
+        imageButtonBack.setImageResource(isLight ? R.drawable.icon_title_bar_back : R.drawable.icon_title_bar_back_light);
         rightText = findViewById(R.id.right_text);
         rightText.setTextColor(isLight ? Color.parseColor("#535353") : Color.WHITE);
         imageButtonBack.setOnClickListener(v -> {

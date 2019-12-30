@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.tools.FileTools;
 import com.android.tools.Logger;
+import com.android.tools.util.FileUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MediaType;
@@ -452,7 +452,7 @@ public class OkHttpUtil {
     @SuppressWarnings("resource")
     public static boolean downloadFile(String url, String src, String dest, OnProgressCallback callback) {
         String path = src;
-        String filename = FileTools.getFilename(url);
+        String filename = FileUtils.getFilename(url);
         String tempName = filename + ".download";
         clearFile(path, filename);
         clearFile(path, tempName);

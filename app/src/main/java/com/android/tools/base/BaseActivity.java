@@ -2,6 +2,7 @@ package com.android.tools.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -13,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.tools.AndroidToolsConfig;
-import com.android.tools.StatusBarUtil;
+import com.android.tools.R;
+import com.android.tools.ResourceUtil;
 import com.android.tools.dialog.LoadingDialog;
 import com.android.tools.rx.RxManager;
+import com.android.tools.statusbar.StatusBarBuilder;
+import com.android.tools.statusbar.StatusBarTools;
 import com.android.tools.widget.ToastManager;
 import com.android.tools.widget.state.IStateViewListener;
 
@@ -64,21 +68,23 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        initStatuBar();
+        initStatusBar();
     }
 
 
-    protected void initStatuBar() {
+    protected void initStatusBar() {
         if (isOnlyTranslateMode()) {
-            isTranslucent = StatusBarUtil.translucent(this);
+            isTranslucent = StatusBarTools.translucent(this);
             return;
         }
-
-        if (isNeedStatusBarLightMode() && StatusBarUtil.setStatusbarTextColor(this) != 0) {
+        int bgColor = ResourceUtil.getColorFromTheme(this, R.attr.status_bar_color, Color.WHITE);
+        boolean isWhiteText = ResourceUtil.getBoolFromTheme(this, R.attr.status_bar_text_is_white, false);
+        if (isNeedStatusBarLightMode() && StatusBarTools.getStatusBarTools().setStatusBarColor(this, isWhiteText)) {
             if (isNeedTranslateMode()) {
                 onChangeTitlebarColor();
             } else {
-                StatusBarUtil.setStatusBarColor(this, AndroidToolsConfig.androidToolsConfig.getStatusBarColor());
+
+                StatusBarBuilder.get(this).setBgColor(bgColor).setWhiteText(isWhiteText).build();
             }
         }
     }

@@ -33,16 +33,16 @@ public class DrawableFactory {
         Drawable drawable = null;
         switch (theme) {
             case DrawableStyle.THEME_MAIN:
-                drawable = DrawableManager.getClickDrawable(COLOR_DEFAULT, COLOR_DEFAULT_PRESS, AndroidTools.dip2px(context, radio));
+                drawable = DrawableManager.getClickDrawable(COLOR_DEFAULT, COLOR_DEFAULT_PRESS, AndroidTools.dip2px( radio));
                 break;
             case DrawableStyle.THEME_MAIN_STATE:
-                drawable = DrawableManager.getEnableDrawable(COLOR_DEFAULT, COLOR_DEFAULT_UNENABLE, AndroidTools.dip2px(context, radio));
+                drawable = DrawableManager.getEnableDrawable(COLOR_DEFAULT, COLOR_DEFAULT_UNENABLE, AndroidTools.dip2px( radio));
                 break;
             case DrawableStyle.THEME_MAIN_LARGE:
-                drawable = DrawableManager.getClickDrawable(COLOR_DEFAULT, COLOR_DEFAULT_PRESS, AndroidTools.dip2px(context, radio_llarge));
+                drawable = DrawableManager.getClickDrawable(COLOR_DEFAULT, COLOR_DEFAULT_PRESS, AndroidTools.dip2px( radio_llarge));
                 break;
             case DrawableStyle.THEME_MAIN_STATE_LARGE:
-                drawable = DrawableManager.getEnableDrawable(COLOR_DEFAULT, COLOR_DEFAULT_UNENABLE, AndroidTools.dip2px(context, radio_llarge));
+                drawable = DrawableManager.getEnableDrawable(COLOR_DEFAULT, COLOR_DEFAULT_UNENABLE, AndroidTools.dip2px( radio_llarge));
                 break;
         }
         return drawable;
@@ -53,10 +53,10 @@ public class DrawableFactory {
         Drawable drawable = null;
         switch (theme) {
             case DrawableStyle.THEME_MAIN:
-                drawable = DrawableManager.getClickDrawable(dcolor, color, AndroidTools.dip2px(context, radio));
+                drawable = DrawableManager.getClickDrawable(dcolor, color, AndroidTools.dip2px(radio));
                 break;
             case DrawableStyle.THEME_MAIN_STATE:
-                drawable = DrawableManager.getEnableDrawable(dcolor, color, AndroidTools.dip2px(context, radio));
+                drawable = DrawableManager.getEnableDrawable(dcolor, color, AndroidTools.dip2px(radio));
                 break;
         }
         return drawable;

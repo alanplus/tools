@@ -35,7 +35,7 @@ public class SentenceTestTextView extends android.support.v7.widget.AppCompatTex
         setGravity(Gravity.CENTER);
         setTextColor(Color.WHITE);
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
-        int i = AndroidTools.dip2px(getContext(), 8);
+        int i = AndroidTools.dip2px(8);
         setSelected(false);
         PADDING_LEFT = i;
         PADDING_BOTTOM = i;

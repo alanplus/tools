@@ -4,6 +4,8 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.tools.util.FileUtils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class Logger {
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
-        File file = new File(FileTools.join(path, name));
+        File file = new File(FileUtils.join(path, name));
         if (file.exists()) {
             file.delete();
         }
@@ -161,5 +163,9 @@ public class Logger {
             if (!TextUtils.isEmpty(msg))
                 Log.println(priority, tag, info + "segmentIndex:" + segmentIndex + ":" + msg);// 打印剩余日志
         }
+    }
+
+    public static void error(Throwable e) {
+        Logger.e(Log.getStackTraceString(e));
     }
 }

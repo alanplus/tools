@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="#00000000"
-        android:src="@drawable/icon_titlebar_back_light" />
+        android:src="@drawable/icon_title_bar_back_light" />
 
     <TextView
         android:id="@+id/main_tilte"

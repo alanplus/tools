@@ -5,6 +5,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 
+import com.android.tools.Logger;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -35,15 +37,6 @@ public class MiUIStatusBarTools implements IStatusBarTools {
         if (window != null) {
             Class clazz = window.getClass();
             try {
-                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-                int darkModeFlag = field.getInt(layoutParams);
-                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-                if (!isWhite) {
-                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
-                } else {
-                    extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
-                }
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (!isWhite) {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -54,8 +47,20 @@ public class MiUIStatusBarTools implements IStatusBarTools {
                     window.getDecorView().setSystemUiVisibility(flag);
                 }
 
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                int darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                if (!isWhite) {
+                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+                } else {
+                    extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+                }
+
+
                 return true;
             } catch (Exception e) {
+                Logger.error(e);
             }
         }
         return false;

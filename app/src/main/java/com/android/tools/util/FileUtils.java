@@ -1,4 +1,4 @@
-package com.android.tools;
+package com.android.tools.util;
 
 import android.text.TextUtils;
 
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Mouse on 2018/10/18.
  */
-public class FileTools {
+public class FileUtils {
 
     public static String getFilename(String path) {
         if (TextUtils.isEmpty(path)) return "";
@@ -26,7 +26,7 @@ public class FileTools {
             return null;
         int index = path.lastIndexOf(".");
         if (index >= 0) {
-            return path.substring(index + 1, path.length()).toLowerCase();
+            return path.substring(index + 1).toLowerCase();
         }
         return null;
     }

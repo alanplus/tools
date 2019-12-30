@@ -1,11 +1,21 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme. -->
+    <style name="XmAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="title_bar_color">?colorPrimary</item>
+        <item name="title_bar_title_color">@color/title_bar_title_color</item>
+        <item name="title_bar_title_size">17dp</item>
+        <item name="title_bar_back_icon">@drawable/icon_title_bar_back</item>
+        <item name="title_bar_enable_divider">true</item>
+        <item name="title_bar_right_text_color">@color/title_bar_title_color</item>
+        <item name="title_bar_right_text_size">16dp</item>
+        <item name="status_bar_color">?title_bar_color</item>
+        <item name="status_bar_text_is_white">false</item>
     </style>
 
     <style name="customDialog" parent="android:style/Theme.Dialog">

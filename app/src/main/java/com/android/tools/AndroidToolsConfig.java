@@ -54,8 +54,4 @@ public abstract class AndroidToolsConfig {
         return path;
     }
 
-    public int getStatusBarColor() {
-        return Color.WHITE;
-    }
-
 }
