@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.android.tools.R;
 import com.android.tools.media.download.IDownloadConfig;
+import com.android.tools.media.download.IMediaStateChangeListener;
 import com.android.tools.media.download.MediaplayerManager;
 
 /**
@@ -17,6 +18,8 @@ public class AudioDownloadViewHelper implements IAudioDownloadView {
     private Context context;
     private View view;
     private IDownloadConfig iDownloadConfig;
+
+    private IMediaStateChangeListener iMediaStateChangeListener;
 
     @Override
     public void init(Context context, View view, AttributeSet attributeSet) {
@@ -41,9 +44,9 @@ public class AudioDownloadViewHelper implements IAudioDownloadView {
         typedArray.recycle();
         if (animBg != 0) view.setTag(R.id.tag_audio_anim_bg, animBg);
         view.setOnClickListener(v -> {
-            if(view instanceof AudioDownloadView){
+            if (view instanceof AudioDownloadView) {
                 onClickEvent();
-            }else{
+            } else {
                 ((AudioDownloadView) view).onClickEvent();
             }
         });
@@ -51,11 +54,15 @@ public class AudioDownloadViewHelper implements IAudioDownloadView {
 
     @Override
     public void onClickEvent() {
-        MediaplayerManager.getInstance(context).play(view, iDownloadConfig);
+        MediaplayerManager.getInstance(context).play(view, iDownloadConfig, this.iMediaStateChangeListener);
     }
 
     @Override
     public void setAudioDownloadConfig(IDownloadConfig iDownloadConfig) {
         this.iDownloadConfig = iDownloadConfig;
+    }
+
+    public void setMediaStateChangeListener(IMediaStateChangeListener iMediaStateChangeListener) {
+        this.iMediaStateChangeListener = iMediaStateChangeListener;
     }
 }

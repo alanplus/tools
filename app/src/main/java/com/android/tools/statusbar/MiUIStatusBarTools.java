@@ -5,7 +5,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

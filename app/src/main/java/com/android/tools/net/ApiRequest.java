@@ -1,6 +1,6 @@
 package com.android.tools.net;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 import com.android.tools.AndroidToolsConfig;
 import com.android.tools.rx.RxSchedulers;
 

@@ -8,9 +8,9 @@ import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 import com.android.tools.AndroidToolsConfig;
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 import com.android.tools.statusbar.StatusBarTools;
 
 import java.lang.reflect.InvocationTargetException;

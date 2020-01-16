@@ -241,6 +241,10 @@ public class BaseActivity extends AppCompatActivity {
         if (null != getStateView()) getStateView().showSuccessState();
     }
 
+    protected void onSuccess(RxObject rxObject) {
+        onSuccess();
+    }
+
     public void showFailureState(String s, boolean retry) {
         if (null != getStateView()) {
             IStateViewListener stateView = getStateView();
@@ -269,7 +273,7 @@ public class BaseActivity extends AppCompatActivity {
                 showLoadingState();
                 break;
             case RxObject.EVENT_CODE_SUCCESS_STATE:
-                onSuccess();
+                onSuccess(rxObject);
                 break;
             case RxObject.EVENT_CODE_FAILURE_STATE:
                 showFailureState(rxObject.message, false);

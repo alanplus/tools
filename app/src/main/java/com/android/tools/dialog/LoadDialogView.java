@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 
 public class LoadDialogView extends View {
     private float playProgress;

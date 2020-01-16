@@ -1,5 +1,6 @@
 package com.android.tools;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +20,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class ViewTools {
 
+    @SuppressLint("ClickableViewAccessibility")
     public static void setClickEffection(View view) {
         view.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {

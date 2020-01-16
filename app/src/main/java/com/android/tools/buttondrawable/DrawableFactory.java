@@ -9,7 +9,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 
 /**
  * Created by Mouse on 2018/9/11.

@@ -13,8 +13,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.android.tools.AndroidTools;
-import com.android.tools.PaintTools;
+import com.alan.common.AndroidTools;
+import com.alan.common.utils.PaintUtils;
 import com.android.tools.R;
 
 /**
@@ -83,7 +83,7 @@ public class WithBottomLineTextView extends View {
         if (gravity == 0 || (isFirstLine && isLine)) {
             return 0;
         }
-        int stringWidth = PaintTools.getStringWidth(text, getPaint(true));
+        int stringWidth = PaintUtils.getStringWidth(text, getPaint(true));
         int measuredWidth = getMeasuredWidth();
         int start = (measuredWidth - stringWidth) / 2;
         return start >= 0 ? start : 0;
@@ -91,7 +91,7 @@ public class WithBottomLineTextView extends View {
 
     private void drawHint(Canvas canvas) {
         if (TextUtils.isEmpty(getText()) && !TextUtils.isEmpty(hint)) {
-            float fontLeading = PaintTools.getFontLeading(getPaint(true));
+            float fontLeading = PaintUtils.getFontLeading(getPaint(true));
             TextPaint paint = getPaint(true);
             paint.setColor(hintColor);
             canvas.drawText(hint, 0, fontLeading, paint);
@@ -100,7 +100,7 @@ public class WithBottomLineTextView extends View {
 
     private int getCustomHeight() {
         StaticLayout staticLayout = getStaticLayout();
-        int fontHeight = PaintTools.getFontHeight(getPaint(true));
+        int fontHeight = PaintUtils.getFontHeight(getPaint(true));
         int lineCount = staticLayout.getLineCount();
         return lineCount * (fontHeight + lineHeight);
     }
@@ -111,7 +111,7 @@ public class WithBottomLineTextView extends View {
     }
 
     private void drawText(Canvas canvas, String text, int line, int lineHeight, int start) {
-        float fontLeading = PaintTools.getFontLeading(getPaint(true));
+        float fontLeading = PaintUtils.getFontLeading(getPaint(true));
         int h = (int) (line * lineHeight + fontLeading);
         canvas.drawText(text, start, h, getPaint(true));
     }
@@ -123,8 +123,8 @@ public class WithBottomLineTextView extends View {
     private int getLineWidth(boolean isLast, String text, int line) {
         if (line == 0 || !isLast) return getMeasuredWidth();
 
-        int stringWidth = PaintTools.getStringWidth(text, getPaint(false));
-        if (stringWidth == 0) return PaintTools.getStringWidth("a", getPaint(false));
+        int stringWidth = PaintUtils.getStringWidth(text, getPaint(false));
+        if (stringWidth == 0) return PaintUtils.getStringWidth("a", getPaint(false));
         return stringWidth;
     }
 

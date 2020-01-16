@@ -3,6 +3,7 @@ package com.android.tools.net;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.alan.common.help.JSONHelper;
 import com.android.tools.AndroidToolsConfig;
 import com.android.tools.tools.AES128Encrypt;
 
@@ -73,7 +74,7 @@ public class ApiBody {
                 public JSONObject parse(String text, ApiResult result) {
                     JSONObject jsonObject = super.parse(text, result);
                     if (result.code == 200) {
-                        JSONArray data = JsonHelper.getJsonArray(jsonObject, "data");
+                        JSONArray data = JSONHelper.getJSONArray(jsonObject, "data");
                         if (data != null)
                             result.object = GsonHelper.stringToList(data.toString(), c);
                     }
@@ -89,7 +90,7 @@ public class ApiBody {
                 public JSONObject parse(String text, ApiResult result) {
                     JSONObject jsonObject = super.parse(text, result);
                     if (result.code == 200) {
-                        JSONArray data = JsonHelper.getJsonArray(jsonObject, name);
+                        JSONArray data = JSONHelper.getJSONArray(jsonObject, name);
                         if (data != null)
                             result.object = GsonHelper.stringToList(data.toString(), c);
                     }
@@ -105,7 +106,7 @@ public class ApiBody {
                 public JSONObject parse(String text, ApiResult result) {
                     JSONObject jsonObject = super.parse(text, result);
                     if (result.code == 200) {
-                        JSONObject data = JsonHelper.getJsonObject(jsonObject, name);
+                        JSONObject data = JSONHelper.getJSONObject(jsonObject, name);
                         if (data != null)
                             result.object = GsonHelper.stringToObject(data.toString(), c);
                     }

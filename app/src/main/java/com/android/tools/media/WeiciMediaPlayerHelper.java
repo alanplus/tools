@@ -7,8 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.alan.common.Logger;
 import com.android.tools.AndroidToolsConfig;
-import com.android.tools.Logger;
 import com.android.tools.R;
 import com.android.tools.widget.audio.AudioTextView;
 

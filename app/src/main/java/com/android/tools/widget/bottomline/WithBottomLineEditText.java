@@ -8,8 +8,8 @@ import android.text.Layout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 
-import com.android.tools.Logger;
-import com.android.tools.PaintTools;
+import com.alan.common.Logger;
+import com.alan.common.utils.PaintUtils;
 
 /**
  * Created by Mouse on 2018/10/25.
@@ -58,6 +58,6 @@ public class WithBottomLineEditText extends android.support.v7.widget.AppCompatE
         if (lines == 0) return getWidth();
         Layout layout = getLayout();
         float lineWidth = layout.getLineWidth(lines);
-        return lineWidth == 0 ? PaintTools.getStringWidth("a", getPaint()) : (int) lineWidth;
+        return lineWidth == 0 ? PaintUtils.getStringWidth("a", getPaint()) : (int) lineWidth;
     }
 }

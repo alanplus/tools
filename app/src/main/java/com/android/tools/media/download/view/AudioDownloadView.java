@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.android.tools.media.download.IDownloadConfig;
+import com.android.tools.media.download.IMediaStateChangeListener;
 
 /**
  * Created by Mouse on 2019/1/29.
@@ -36,5 +37,9 @@ public class AudioDownloadView extends android.support.v7.widget.AppCompatTextVi
     @Override
     public void setAudioDownloadConfig(IDownloadConfig iDownloadConfig) {
         audioDownloadViewHelper.setAudioDownloadConfig(iDownloadConfig);
+    }
+
+    public void setMediaStateChangeListener(IMediaStateChangeListener iMediaStateChangeListener) {
+        this.audioDownloadViewHelper.setMediaStateChangeListener(iMediaStateChangeListener);
     }
 }

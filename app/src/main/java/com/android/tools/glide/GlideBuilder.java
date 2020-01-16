@@ -1,15 +1,21 @@
 package com.android.tools.glide;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.AnimRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+import android.view.View;
 import android.widget.ImageView;
 
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,12 +31,10 @@ public class GlideBuilder {
     private int res;
     private int placeHolder;
     // 0 正常 1 圆形 2 圆角
-
     private @ImgType
     int imageType;
 
     private int corner;
-
 
     // 0 url 1 res
     private int type;
@@ -65,11 +69,11 @@ public class GlideBuilder {
         return new GlideBuilder(url);
     }
 
-    public static GlideBuilder get( @DrawableRes int res){
+    public static GlideBuilder get(@DrawableRes int res) {
         return new GlideBuilder(res);
     }
 
-    public void into(ImageView imageView) {
+    public void into(View imageView) {
 
         try {
             RequestManager requestManager = Glide.with(imageView.getContext());
@@ -82,8 +86,42 @@ public class GlideBuilder {
             if (placeHolder != 0) {
                 load.placeholder(placeHolder);
             }
-            load.into(imageView);
+            if (imageView instanceof ImageView) {
+                load.into((ImageView) imageView);
+            } else {
+                load.into(new SimpleTarget<GlideDrawable>() {
 
+                    @Override
+                    public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        Drawable drawable = glideDrawable.getCurrent();
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            imageView.setBackground(drawable);
+                        } else {
+                            imageView.setBackgroundDrawable(drawable);
+                        }
+                    }
+                });
+            }
+
+
+        } catch (Exception e) {
+            Logger.error(e);
+        }
+    }
+
+    public void into(Context context, SimpleTarget<GlideDrawable> simpleTarget) {
+        try {
+            RequestManager requestManager = Glide.with(context);
+            DrawableTypeRequest load = load(requestManager);
+            if (null == load) {
+                return;
+            }
+            handlerShape(context, load);
+
+            if (placeHolder != 0) {
+                load.placeholder(placeHolder);
+            }
+            load.into(simpleTarget);
         } catch (Exception e) {
             Logger.error(e);
         }
@@ -146,7 +184,7 @@ public class GlideBuilder {
 
     private void handlerAnim(DrawableTypeRequest requestManager) {
         if (isAnim) {
-            if(anim!=0){
+            if (anim != 0) {
                 requestManager.animate(anim);
             }
         } else {

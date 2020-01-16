@@ -14,8 +14,8 @@ import android.os.Message;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 
-import com.android.tools.AndroidTools;
-import com.android.tools.Logger;
+import com.alan.common.AndroidTools;
+import com.alan.common.Logger;
 import com.android.tools.net.OkHttpUtil;
 import com.android.tools.rx.RxSchedulers;
 

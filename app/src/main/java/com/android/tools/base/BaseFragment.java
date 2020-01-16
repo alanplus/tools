@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 import com.android.tools.rx.RxManager;
 
 /**

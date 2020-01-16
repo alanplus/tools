@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 import com.android.tools.R;
 
 

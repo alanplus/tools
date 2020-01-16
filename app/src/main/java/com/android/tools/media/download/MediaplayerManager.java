@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 import com.android.tools.R;
 import com.android.tools.widget.ToastManager;
 
@@ -25,6 +25,8 @@ public class MediaplayerManager implements IMediaStateChangeListener {
     private static MediaplayerManager mediaplayerManager;
     private Context context;
 
+    private IMediaStateChangeListener iMediaStateChangeListener;
+
     private MediaplayerManager(Context context) {
         this.context = context.getApplicationContext();
         yxMediaplayer = new YxMediaplayer(this.context);
@@ -38,6 +40,11 @@ public class MediaplayerManager implements IMediaStateChangeListener {
     }
 
     public void play(View view, IDownloadConfig iDownloadConfig) {
+        play(view, iDownloadConfig, null);
+    }
+
+    public void play(View view, IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
+        this.iMediaStateChangeListener = iMediaStateChangeListener;
         String name = iDownloadConfig.getAudioName();
         if (mView == view) {
             if (yxMediaplayer.isPlaying()) {
@@ -60,24 +67,38 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         }
     }
 
-    public void play(View view,String name) {
+    public void play(IDownloadConfig iDownloadConfig) {
+        play(iDownloadConfig, null);
+    }
+
+    public void play(IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
+        this.iMediaStateChangeListener = iMediaStateChangeListener;
+        String name = iDownloadConfig.getAudioName();
+        if (yxMediaplayer.isPlaying()) {
+            yxMediaplayer.stop();
+        } else {
+            yxMediaplayer.play(name, iDownloadConfig, this);
+        }
+    }
+
+    public void play(View view, String name) {
         if (mView == view) {
             if (yxMediaplayer.isPlaying()) {
                 yxMediaplayer.stop();
             } else {
-                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+                yxMediaplayer.play(name, YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
             }
         } else {
             if (yxMediaplayer.getState() == IMediaStateChangeListener.STATE_IDLE) {
                 this.mView = view;
-                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+                yxMediaplayer.play(name, YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
             } else {
                 yxMediaplayer.destroy();
                 yxMediaplayer.setiMediaStateChangeListener(null);
                 resetView();
                 this.mView = view;
                 yxMediaplayer = new YxMediaplayer(context);
-                yxMediaplayer.play(name,YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
+                yxMediaplayer.play(name, YxMediaplayer.AUDIO_FILE_TYPE_ASSETS);
             }
         }
     }
@@ -101,7 +122,9 @@ public class MediaplayerManager implements IMediaStateChangeListener {
     }
 
     private void startViewAnimation() {
-
+        if (null == mView) {
+            return;
+        }
         try {
             mView.clearAnimation();
             Object tag3 = mView.getTag(R.id.tag_anim_type);
@@ -133,6 +156,12 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onLoadingStateListener() {
+        if (null != iMediaStateChangeListener) {
+            iMediaStateChangeListener.onLoadingStateListener();
+        }
+        if (null == mView) {
+            return;
+        }
         Object tag = this.mView.getTag(R.id.tag_loading);
         if (null == tag) return;
         int drawable = (int) tag;
@@ -144,55 +173,85 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onLoadFinishStateListener() {
-
+        if (null != iMediaStateChangeListener) {
+            iMediaStateChangeListener.onLoadFinishStateListener();
+        }
     }
 
     @Override
     public void onPrepareStateListener() {
-
+        if (null != iMediaStateChangeListener) {
+            iMediaStateChangeListener.onPrepareStateListener();
+        }
     }
 
     @Override
     public void onStartStateListener() {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
-        AndroidSchedulers.mainThread().scheduleDirect(this::startViewAnimation);
+        if (null == mView && null == iMediaStateChangeListener) return;
+        AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onStartStateListener();
+            }
+            resetView();
+        });
 
     }
 
     @Override
     public void onPauseStateListener() {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
-        AndroidSchedulers.mainThread().scheduleDirect(this::resetView);
+        if (null == mView && null == iMediaStateChangeListener) return;
+        AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onPauseStateListener();
+            }
+            resetView();
+        });
     }
 
     @Override
     public void onStopStateListener() {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
-        AndroidSchedulers.mainThread().scheduleDirect(this::resetView);
+        if (null == mView && null == iMediaStateChangeListener) return;
+        AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onStopStateListener();
+            }
+            resetView();
+        });
     }
 
     @Override
     public void onDestroyStateListener() {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
-        AndroidSchedulers.mainThread().scheduleDirect(this::resetView);
+        if (null == mView && null == iMediaStateChangeListener) return;
+        AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onDestroyStateListener();
+            }
+            resetView();
+        });
     }
 
     @Override
     public void onIdleStateListener() {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
-        AndroidSchedulers.mainThread().scheduleDirect(this::resetView);
+        if (null == mView && null == iMediaStateChangeListener) return;
+        AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onIdleStateListener();
+            }
+            resetView();
+        });
     }
 
     @Override
     public void onErrorStateListener(int error) {
-        if (null == mView) return;
-        Logger.d(Thread.currentThread().getName());
+        if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            if (null != iMediaStateChangeListener) {
+                iMediaStateChangeListener.onErrorStateListener(error);
+            }
+
+            if (mView == null) {
+                return;
+            }
             resetView();
             if (error == IMediaStateChangeListener.ERROR_NO_NET) {
                 ToastManager.getInstance().showToast(context, "网络无效，请重试");
@@ -200,5 +259,9 @@ public class MediaplayerManager implements IMediaStateChangeListener {
                 ToastManager.getInstance().showToast(context, "播放失败");
             }
         });
+    }
+
+    public void setMediaStateChangeListener(IMediaStateChangeListener iMediaStateChangeListener) {
+        this.iMediaStateChangeListener = iMediaStateChangeListener;
     }
 }

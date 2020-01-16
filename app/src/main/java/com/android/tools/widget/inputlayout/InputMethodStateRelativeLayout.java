@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.android.tools.Logger;
+import com.alan.common.Logger;
 
 /**
  * Created by Mouse on 2018/10/25.

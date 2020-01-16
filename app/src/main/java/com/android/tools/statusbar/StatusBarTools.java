@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.android.tools.AndroidTools;
+import com.alan.common.AndroidTools;
 import com.android.tools.R;
 
 import java.lang.reflect.Field;

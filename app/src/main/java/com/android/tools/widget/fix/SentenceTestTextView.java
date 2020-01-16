@@ -8,8 +8,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 
-import com.android.tools.AndroidTools;
-import com.android.tools.PaintTools;
+import com.alan.common.AndroidTools;
+import com.alan.common.utils.PaintUtils;
 
 /**
  * Created by Mouse on 2018/11/27.
@@ -53,8 +53,8 @@ public class SentenceTestTextView extends android.support.v7.widget.AppCompatTex
     public int[] measure() {
         String text = getText().toString();
         if (TextUtils.isEmpty(text)) return new int[]{0, 0};
-        int fontHeight = PaintTools.getFontHeight(getPaint());
-        int stringWidth = PaintTools.getStringWidth(text, getPaint());
+        int fontHeight = PaintUtils.getFontHeight(getPaint());
+        int stringWidth = PaintUtils.getStringWidth(text, getPaint());
         int[] data = {stringWidth + PADDING_LEFT + PADDING_RIGHT, fontHeight + PADDING_TOP + PADDING_BOTTOM};
         return data;
     }
