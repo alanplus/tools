@@ -29,12 +29,19 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 
 public class YxMediaplayer
-        implements OnCompletionListener, OnErrorListener, OnPreparedListener {
+        implements OnCompletionListener, OnErrorListener, OnPreparedListener, MediaPlayer.OnBufferingUpdateListener {
 
     public static final int AUDIO_FILE_TYPE_AUTO = 0;
     public static final int AUDIO_FILE_TYPE_ASSETS = 1;
     public static final int AUDIO_FILE_TYPE_FILE = 2;
     public static final int AUDIO_FILE_TYPE_NET = 3;
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        Logger.d("percent:" + percent);
+        Logger.d("total:" + mMediaPlayer.getDuration());
+
+    }
 
     @IntDef({AUDIO_FILE_TYPE_AUTO, AUDIO_FILE_TYPE_ASSETS, AUDIO_FILE_TYPE_FILE, AUDIO_FILE_TYPE_NET})
     @interface AudioFileType {
@@ -137,6 +144,7 @@ public class YxMediaplayer
         mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.setOnErrorListener(this);
         mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setOnBufferingUpdateListener(this);
         return mMediaPlayer;
     }
 
