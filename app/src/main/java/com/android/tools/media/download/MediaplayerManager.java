@@ -110,6 +110,33 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         }
     }
 
+    /**
+     * 不依赖View 播放
+     *
+     * @param name
+     */
+    public void play(String name) {
+        resetView();
+        mView = null;
+        yxMediaplayer.setiMediaStateChangeListener(this);
+        if (yxMediaplayer.isPlaying()) {
+            yxMediaplayer.stop();
+        } else {
+            yxMediaplayer.play(name, YxMediaplayer.AUDIO_FILE_TYPE_AUTO);
+        }
+    }
+
+    public void play(String name, IDownloadConfig iDownloadConfig) {
+        resetView();
+        mView = null;
+        if (yxMediaplayer.isPlaying()) {
+            yxMediaplayer.stop();
+        } else {
+            yxMediaplayer.play(name, iDownloadConfig, this);
+        }
+    }
+
+
     public void stop() {
         if (null != yxMediaplayer && yxMediaplayer.isPlaying()) {
             yxMediaplayer.stop();
@@ -273,6 +300,13 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         });
     }
 
+    @Override
+    public void onComplete() {
+        if (null != onMediaProgressListener) {
+            onMediaProgressListener.onComplete();
+        }
+    }
+
     public void setMediaStateChangeListener(IMediaStateChangeListener iMediaStateChangeListener) {
         this.iMediaStateChangeListener = iMediaStateChangeListener;
     }
@@ -305,7 +339,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
                     int duration = yxMediaplayer.getDuration();
                     Logger.d("currentPosition:" + currentPosition);
                     Logger.d("duration:" + duration);
-                    if(null!=onMediaProgressListener){
+                    if (null != onMediaProgressListener) {
                         onMediaProgressListener.onMediaProgressListener(currentPosition, duration);
                     }
                 } catch (Exception e) {
@@ -322,6 +356,13 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         if (MediaProgressHelper.hasInstance()) {
             MediaProgressHelper.getInstance().destroy();
         }
+    }
 
+    public void seek(int position) {
+        yxMediaplayer.seek(position);
+    }
+
+    public int getState() {
+        return yxMediaplayer.getState();
     }
 }

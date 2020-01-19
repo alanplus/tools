@@ -44,4 +44,6 @@ public interface IMediaStateChangeListener {
     void onIdleStateListener();
 
     void onErrorStateListener(@error int error);
+
+    void onComplete();
 }

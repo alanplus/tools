@@ -151,6 +151,9 @@ public class YxMediaplayer
     @Override
     public void onCompletion(MediaPlayer mp) {
         setState(IMediaStateChangeListener.STATE_STOP, 0);
+        if (null != iMediaStateChangeListener) {
+            iMediaStateChangeListener.onComplete();
+        }
     }
 
     @Override
@@ -231,15 +234,15 @@ public class YxMediaplayer
     }
 
     private boolean canPlayByAssets(String name) {
-        return true;
-//        AssetManager am = context.getAssets();
-//        try {
-//            String[] list = am.list("audio");
-//            List<String> list1 = Arrays.asList(list);
-//            return list1.contains(name);
-//        } catch (IOException e) {
-//            return false;
-//        }
+//        return true;
+        AssetManager am = context.getAssets();
+        try {
+            String[] list = am.list("audio");
+            List<String> list1 = Arrays.asList(list);
+            return list1.contains(name);
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     public void play(String name, IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
@@ -360,5 +363,9 @@ public class YxMediaplayer
 
     public int getDuration() {
         return mMediaPlayer.getDuration();
+    }
+
+    public void seek(int position) {
+        mMediaPlayer.seekTo(position);
     }
 }

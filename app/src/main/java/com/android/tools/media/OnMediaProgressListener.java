@@ -8,4 +8,5 @@ package com.android.tools.media;
 public interface OnMediaProgressListener {
 
     void onMediaProgressListener(int current, int total);
+    void onComplete();
 }
