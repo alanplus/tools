@@ -241,7 +241,7 @@ public class BaseActivity extends AppCompatActivity {
         if (null != getStateView()) getStateView().showSuccessState();
     }
 
-    protected void onSuccess(RxObject rxObject) {
+    protected void onSuccess(RxObject rxObject){
         onSuccess();
     }
 

@@ -44,10 +44,11 @@ public class AudioDownloadViewHelper implements IAudioDownloadView {
         typedArray.recycle();
         if (animBg != 0) view.setTag(R.id.tag_audio_anim_bg, animBg);
         view.setOnClickListener(v -> {
-            if (view instanceof AudioDownloadView) {
-                onClickEvent();
-            } else {
+            if(view instanceof AudioDownloadView){
                 ((AudioDownloadView) view).onClickEvent();
+
+            }else{
+                onClickEvent();
             }
         });
     }

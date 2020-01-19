@@ -93,23 +93,22 @@ public class GlideBuilder {
 
                     @Override
                     public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        Drawable drawable = glideDrawable.getCurrent();
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            imageView.setBackground(drawable);
-                        } else {
-                            imageView.setBackgroundDrawable(drawable);
+                        Drawable current = glideDrawable.getCurrent();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            imageView.setBackground(current);
+                        }else{
+                            imageView.setBackgroundDrawable(current);
                         }
                     }
                 });
             }
-
-
         } catch (Exception e) {
             Logger.error(e);
         }
     }
 
-    public void into(Context context, SimpleTarget<GlideDrawable> simpleTarget) {
+    public void into(Context context,SimpleTarget<GlideDrawable> simpleTarget){
+
         try {
             RequestManager requestManager = Glide.with(context);
             DrawableTypeRequest load = load(requestManager);
