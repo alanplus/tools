@@ -192,7 +192,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
             if (null != iMediaStateChangeListener) {
                 iMediaStateChangeListener.onStartStateListener();
             }
-            resetView();
+            startViewAnimation();
         });
 
     }
