@@ -353,4 +353,12 @@ public class YxMediaplayer
         boolean b = OkHttpUtil.downloadFile(context, iDownloadConfig.getUrl(), destName);
         return b ? destName : "";
     }
+
+    public int getCurrentPosition() {
+        return mMediaPlayer.getCurrentPosition();
+    }
+
+    public int getDuration() {
+        return mMediaPlayer.getDuration();
+    }
 }

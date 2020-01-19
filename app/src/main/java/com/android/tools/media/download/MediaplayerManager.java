@@ -10,7 +10,11 @@ import android.widget.ImageView;
 
 import com.alan.common.Logger;
 import com.android.tools.R;
+import com.android.tools.media.MediaProgressHelper;
+import com.android.tools.media.OnMediaProgressListener;
 import com.android.tools.widget.ToastManager;
+
+import java.util.TimerTask;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -26,6 +30,9 @@ public class MediaplayerManager implements IMediaStateChangeListener {
     private Context context;
 
     private IMediaStateChangeListener iMediaStateChangeListener;
+
+    private OnMediaProgressListener onMediaProgressListener;
+
 
     private MediaplayerManager(Context context) {
         this.context = context.getApplicationContext();
@@ -187,6 +194,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onStartStateListener() {
+        startTime();
         if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
             if (null != iMediaStateChangeListener) {
@@ -199,6 +207,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onPauseStateListener() {
+        stopTime();
         if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
             if (null != iMediaStateChangeListener) {
@@ -210,6 +219,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onStopStateListener() {
+        stopTime();
         if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
             if (null != iMediaStateChangeListener) {
@@ -221,6 +231,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onDestroyStateListener() {
+        stopTime();
         if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
             if (null != iMediaStateChangeListener) {
@@ -232,6 +243,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     @Override
     public void onIdleStateListener() {
+        stopTime();
         if (null == mView && null == iMediaStateChangeListener) return;
         AndroidSchedulers.mainThread().scheduleDirect(() -> {
             if (null != iMediaStateChangeListener) {
@@ -263,5 +275,53 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     public void setMediaStateChangeListener(IMediaStateChangeListener iMediaStateChangeListener) {
         this.iMediaStateChangeListener = iMediaStateChangeListener;
+    }
+
+
+    public void setOnMediaProgressListener(OnMediaProgressListener onMediaProgressListener) {
+        this.onMediaProgressListener = onMediaProgressListener;
+    }
+
+    private void startTime() {
+        if (null != onMediaProgressListener) {
+            MediaProgressHelper.getInstance().execute(timerTask);
+        }
+
+    }
+
+    private void stopTime() {
+        if (MediaProgressHelper.hasInstance()) {
+            MediaProgressHelper.getInstance().cancel();
+        }
+    }
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            Logger.d("executor timer task");
+            if (yxMediaplayer.getState() == IMediaStateChangeListener.STATE_START && null != onMediaProgressListener) {
+                try {
+                    int currentPosition = yxMediaplayer.getCurrentPosition();
+                    int duration = yxMediaplayer.getDuration();
+                    Logger.d("currentPosition:" + currentPosition);
+                    Logger.d("duration:" + duration);
+                    if(null!=onMediaProgressListener){
+                        onMediaProgressListener.onMediaProgressListener(currentPosition, duration);
+                    }
+                } catch (Exception e) {
+                    Logger.error(e);
+                }
+            }
+        }
+    };
+
+    public void destroy() {
+        yxMediaplayer.destroy();
+        onMediaProgressListener = null;
+        mediaplayerManager = null;
+        if (MediaProgressHelper.hasInstance()) {
+            MediaProgressHelper.getInstance().destroy();
+        }
+
     }
 }
