@@ -22,6 +22,7 @@ import com.android.tools.rx.RxSchedulers;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -270,8 +271,19 @@ public class YxMediaplayer
             setState(IMediaStateChangeListener.STATE_ERROR, IMediaStateChangeListener.ERROR_NO_NET);
             return;
         }
+        downlaod(name, iDownloadConfig);
 
+    }
+
+
+    public synchronized void downlaod(String name, IDownloadConfig iDownloadConfig) {
         setState(IMediaStateChangeListener.STATE_LOADING, 0);
+        String destName = iDownloadConfig.getDestName(name);
+        if (new File(destName).exists()) {
+            setState(IMediaStateChangeListener.STATE_LOADFINISH, 0);
+            play(destName, AUDIO_FILE_TYPE_FILE);
+            return;
+        }
         Observable.create((ObservableOnSubscribe<String>) e -> {
             String file = download(name, iDownloadConfig);
             e.onNext(file);
@@ -367,5 +379,17 @@ public class YxMediaplayer
 
     public void seek(int position) {
         mMediaPlayer.seekTo(position);
+    }
+
+    public void pause() {
+        if (state == IMediaStateChangeListener.STATE_START) {
+            mMediaPlayer.pause();
+            setState(IMediaStateChangeListener.STATE_PAUSE, 0);
+        }
+    }
+
+    public void start() {
+        mMediaPlayer.start();
+        setState(IMediaStateChangeListener.STATE_START, 0);
     }
 }

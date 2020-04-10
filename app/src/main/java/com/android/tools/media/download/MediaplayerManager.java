@@ -2,6 +2,7 @@ package com.android.tools.media.download;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -50,7 +51,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         play(view, iDownloadConfig, null);
     }
 
-    public void play(View view, IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
+    public void play(View view, @NonNull IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
         this.iMediaStateChangeListener = iMediaStateChangeListener;
         String name = iDownloadConfig.getAudioName();
         if (mView == view) {
@@ -74,11 +75,11 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         }
     }
 
-    public void play(IDownloadConfig iDownloadConfig) {
+    public void play(@NonNull IDownloadConfig iDownloadConfig) {
         play(iDownloadConfig, null);
     }
 
-    public void play(IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
+    public void play(@NonNull IDownloadConfig iDownloadConfig, IMediaStateChangeListener iMediaStateChangeListener) {
         this.iMediaStateChangeListener = iMediaStateChangeListener;
         String name = iDownloadConfig.getAudioName();
         if (yxMediaplayer.isPlaying()) {
@@ -364,5 +365,29 @@ public class MediaplayerManager implements IMediaStateChangeListener {
 
     public int getState() {
         return yxMediaplayer.getState();
+    }
+
+    public void playOrPause(String name, IDownloadConfig iDownloadConfig) {
+        int state = yxMediaplayer.getState();
+        switch (state) {
+            case IMediaStateChangeListener.STATE_START:
+                yxMediaplayer.pause();
+                break;
+            case IMediaStateChangeListener.STATE_IDLE:
+            case IMediaStateChangeListener.STATE_ERROR:
+            case IMediaStateChangeListener.STATE_DESTROY:
+            case IMediaStateChangeListener.STATE_STOP:
+                play(name, iDownloadConfig);
+                break;
+            case IMediaStateChangeListener.STATE_PAUSE:
+                yxMediaplayer.start();
+                break;
+            case IMediaStateChangeListener.STATE_LOADFINISH:
+            case IMediaStateChangeListener.STATE_PREPARE:
+            case IMediaStateChangeListener.STATE_LOADING:
+                yxMediaplayer.setState(IMediaStateChangeListener.STATE_IDLE, 0);
+                break;
+
+        }
     }
 }
