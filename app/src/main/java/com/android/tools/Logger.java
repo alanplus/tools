@@ -162,4 +162,8 @@ public class Logger {
                 Log.println(priority, tag, info + "segmentIndex:" + segmentIndex + ":" + msg);// 打印剩余日志
         }
     }
+
+    public static void error(Throwable e) {
+        Logger.e(Log.getStackTraceString(e));
+    }
 }

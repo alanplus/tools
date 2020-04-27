@@ -90,6 +90,6 @@ public class ApiRequest {
 
 
     public static void cancel(String url) {
-        OkHttpUtil.cancel(url);
+//        OkHttpUtil.cancel(url);
     }
 }

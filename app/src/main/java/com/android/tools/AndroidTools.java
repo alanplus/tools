@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -36,12 +37,31 @@ public class AndroidTools {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * dp转px
+     *
+     * @param dpValue
+     * @return
+     */
+    public static int dip2px(float dpValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
 
     /**
      * 根据手机的分辨率 px(像素) 转 dp
      */
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率 px(像素) 转 dp
+     */
+    public static int px2dip(float pxValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 

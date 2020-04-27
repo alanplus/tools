@@ -8,14 +8,6 @@ import android.util.Log;
 
 import com.android.tools.FileTools;
 import com.android.tools.Logger;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,11 +20,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class OkHttpUtil {
 
     public enum TYPE {GET, POST, IMG, UPDATE_FILE}
 
-    private static final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private static OkHttpClient mOkHttpClient;
 
     private static final int NETWORK_TIMEOUT = 600;
     private static final String CHARSET_NAME = "UTF-8";
@@ -41,9 +42,11 @@ public class OkHttpUtil {
     public static final MediaType MEDIA_TYPE_APPLICATION_FILE = MediaType.parse("application/octet-stream");
 
     static {
-        mOkHttpClient.setConnectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        mOkHttpClient.setReadTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        mOkHttpClient.setWriteTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        builder.writeTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        builder.connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        mOkHttpClient = builder.build();
     }
 
     /**
@@ -76,14 +79,15 @@ public class OkHttpUtil {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
-            public void onResponse(Response arg0) throws IOException {
+            public void onFailure(Call call, IOException e) {
 
             }
 
             @Override
-            public void onFailure(Request arg0, IOException arg1) {
+            public void onResponse(Call call, Response response) throws IOException {
 
             }
+
         });
     }
 
@@ -123,17 +127,19 @@ public class OkHttpUtil {
     }
 
     private static RequestBody getPostBuilder(HashMap<String, String> params) {
-        FormEncodingBuilder fe = new FormEncodingBuilder();
-        if (null == params)
-            return fe.build();
-        Set<String> keys = params.keySet();
-        for (String key : keys) {
-            String value = params.get(key);
-            if (value != null) {
-                fe.add(key, value);
-            }
-        }
-        return fe.build();
+//        Request.Builder builder = new Request.Builder();
+        return RequestBody.create(MEDIA_TYPE_APPLICATION, getContentFromMap(params));
+//        FormEncodingBuilder fe = new FormEncodingBuilder();
+//        if (null == params)
+//            return fe.build();
+//        Set<String> keys = params.keySet();
+//        for (String key : keys) {
+//            String value = params.get(key);
+//            if (value != null) {
+//                fe.add(key, value);
+//            }
+//        }
+//        return fe.build();
     }
 
     /**
@@ -219,8 +225,12 @@ public class OkHttpUtil {
     }
 
     public static String uploadFileByPost(String url, File file, HashMap<String, String> map) {
-        mOkHttpClient.setConnectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
+        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        OkHttpClient client = builderClient.build();
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
         builder.addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
         builder.addFormDataPart("user_code", map.get("user_code"));
         builder.addFormDataPart("session", map.get("session"));
@@ -233,7 +243,7 @@ public class OkHttpUtil {
                 .post(requestBody)// 添加请求体
                 .build();
         try {
-            Response response = mOkHttpClient.newCall(request).execute();
+            Response response = client.newCall(request).execute();
             if (null != response) {
                 return response.body().string();
             }
@@ -244,8 +254,13 @@ public class OkHttpUtil {
     }
 
     public static String uploadAudioFileByPost(String url, File file, HashMap<String, String> map) {
-        mOkHttpClient.setConnectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
+        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        OkHttpClient client = builderClient.build();
+
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
         builder.addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("audio/mpeg"), file));
         builder.addFormDataPart("user_code", map.get("user_code"));
         builder.addFormDataPart("session", map.get("session"));
@@ -256,7 +271,7 @@ public class OkHttpUtil {
                 .post(requestBody)// 添加请求体
                 .build();
         try {
-            Response response = mOkHttpClient.newCall(request).execute();
+            Response response = client.newCall(request).execute();
             if (null != response) {
                 return response.body().string();
             }
@@ -269,8 +284,12 @@ public class OkHttpUtil {
     public static String uploadFileByPost(String url, File file) {
 
         String content = "";
-        mOkHttpClient.setConnectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
+        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        OkHttpClient client = builderClient.build();
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
         builder.addFormDataPart("name", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
         builder.addPart(RequestBody.create(MEDIA_TYPE_APPLICATION, content));
         RequestBody requestBody = builder.build();
@@ -488,15 +507,13 @@ public class OkHttpUtil {
     }
 
     public static OkHttpClient newOkHttpClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.setWriteTimeout(1, TimeUnit.HOURS);
-        client.setReadTimeout(1, TimeUnit.HOURS);
-        client.setConnectTimeout(1, TimeUnit.HOURS);
-        return client;
+
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        client.writeTimeout(1, TimeUnit.HOURS);
+        client.readTimeout(1, TimeUnit.HOURS);
+        client.connectTimeout(1, TimeUnit.HOURS);
+        return client.build();
     }
 
-    public static void cancel(String url) {
-        mOkHttpClient.cancel(url);
-    }
 
 }
