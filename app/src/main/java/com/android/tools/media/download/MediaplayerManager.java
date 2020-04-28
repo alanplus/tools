@@ -2,6 +2,7 @@ package com.android.tools.media.download;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -37,7 +38,7 @@ public class MediaplayerManager implements IMediaStateChangeListener {
         return mediaplayerManager;
     }
 
-    public void play(View view, IDownloadConfig iDownloadConfig) {
+    public void play(View view, @NonNull IDownloadConfig iDownloadConfig) {
         String name = iDownloadConfig.getAudioName();
         if (mView == view) {
             if (yxMediaplayer.isPlaying()) {

@@ -15,7 +15,8 @@ public class Logger {
 
 
     public static void writeFile(String text) {
-        if (!AndroidToolsConfig.androidToolsConfig.isDebug()) return;
+        if (null == AndroidToolsConfig.androidToolsConfig || !AndroidToolsConfig.androidToolsConfig.isDebug())
+            return;
         String path = Environment.getExternalStorageDirectory().getPath() + "/a.txt";
         File file = new File(path);
         if (file.exists()) {
@@ -33,7 +34,8 @@ public class Logger {
     }
 
     public static void append(String text) {
-        if (!AndroidToolsConfig.androidToolsConfig.isDebug() || TextUtils.isEmpty(text)) return;
+        if (null == AndroidToolsConfig.androidToolsConfig || !AndroidToolsConfig.androidToolsConfig.isDebug() || TextUtils.isEmpty(text))
+            return;
         String path = Environment.getExternalStorageDirectory().getPath() + "/a.txt";
         File file = new File(path);
 
@@ -51,7 +53,8 @@ public class Logger {
     }
 
     public static void writeFile(String text, String path, String name) {
-        if (!AndroidToolsConfig.androidToolsConfig.isDebug()) return;
+        if (null == AndroidToolsConfig.androidToolsConfig || !AndroidToolsConfig.androidToolsConfig.isDebug())
+            return;
 
         File fileDir = new File(path);
         if (!fileDir.exists()) {
@@ -114,7 +117,7 @@ public class Logger {
     }
 
     private static void println(int priority, String tag, String msg) {
-        if (TextUtils.isEmpty(tag) || TextUtils.isEmpty(msg) || !AndroidToolsConfig.androidToolsConfig.isDebug())
+        if (null == AndroidToolsConfig.androidToolsConfig || TextUtils.isEmpty(tag) || TextUtils.isEmpty(msg) || !AndroidToolsConfig.androidToolsConfig.isDebug())
             return;
 
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -131,7 +134,7 @@ public class Logger {
     }
 
     private static void println(String tag, String msg, Throwable e) {
-        if (TextUtils.isEmpty(tag) || TextUtils.isEmpty(msg) || !AndroidToolsConfig.androidToolsConfig.isDebug())
+        if (null == AndroidToolsConfig.androidToolsConfig || TextUtils.isEmpty(tag) || TextUtils.isEmpty(msg) || !AndroidToolsConfig.androidToolsConfig.isDebug())
             return;
 
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -165,5 +168,9 @@ public class Logger {
 
     public static void error(Throwable e) {
         Logger.e(Log.getStackTraceString(e));
+        if (null == AndroidToolsConfig.androidToolsConfig || e == null || !AndroidToolsConfig.androidToolsConfig.isDebug()) {
+            return;
+        }
+        Log.e(TAG, Log.getStackTraceString(e));
     }
 }
