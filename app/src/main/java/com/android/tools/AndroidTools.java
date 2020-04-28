@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created by Mouse on 2018/10/15.
@@ -134,7 +135,7 @@ public class AndroidTools {
     public static boolean isWifi(Context mContext) {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetInfo != null
                 && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
@@ -197,11 +198,12 @@ public class AndroidTools {
      * @return
      */
     public static String getApplicationName(Context context) {
-        return getSomeApplicationName(context.getPackageName(),context);
+        return getSomeApplicationName(context.getPackageName(), context);
     }
 
     /**
      * 通过包名获取应用名称
+     *
      * @param pkg
      * @param context
      * @return
@@ -217,6 +219,10 @@ public class AndroidTools {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean listIsNull(List list) {
+        return null == list || list.size() == 0;
     }
 
 }
