@@ -125,4 +125,40 @@ public class ViewTools {
             }
         });
     }
+
+    /**
+     * 获取View的高度，但是不一定成功
+     *
+     * @param view
+     * @return
+     */
+    public static int getTargetHeight(View view) {
+        int measuredHeight = view.getMeasuredHeight();
+        if (measuredHeight > 0) {
+            return measuredHeight;
+        }
+        int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(width, height);
+        return view.getMeasuredHeight();
+    }
+
+
+    /**
+     * 获取View的宽度，但是不一定成功
+     *
+     * @param view
+     * @return
+     */
+    public static int getTargetWidth(View view) {
+        int measuredWidth = view.getMeasuredWidth();
+        if (measuredWidth > 0) {
+            return measuredWidth;
+        }
+        int width = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(width, height);
+        return view.getMeasuredWidth();
+    }
+
 }
