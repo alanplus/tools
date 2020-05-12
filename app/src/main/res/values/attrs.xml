@@ -48,10 +48,6 @@
         <attr name="padding_y" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="CommontTitleBarView">
-        <attr name="is_light" format="boolean" />
-        <attr name="bar_title" format="string|reference" />
-    </declare-styleable>
 
     <declare-styleable name="ScaleTextView">
         <attr name="scale_able" format="boolean" />
