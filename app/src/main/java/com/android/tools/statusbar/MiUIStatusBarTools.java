@@ -1,9 +1,11 @@
 package com.android.tools.statusbar;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -47,6 +49,11 @@ public class MiUIStatusBarTools implements IStatusBarTools {
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (!isWhite) {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }else{
+                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        window.setStatusBarColor(Color.WHITE);
                     }
                 } else {
                     int flag = activity.getWindow().getDecorView().getSystemUiVisibility()
