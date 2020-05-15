@@ -259,7 +259,10 @@ public class GlideTools {
 
     public static void setBackgound(View view, String url) {
         Observable.create((ObservableOnSubscribe<Bitmap>) e -> {
-            e.onNext(getBitmap(url, view.getContext()));
+            Bitmap bitmap = getBitmap(url, view.getContext());
+            if (null != bitmap) {
+                e.onNext(bitmap);
+            }
             e.onComplete();
         }).compose(RxSchedulers.ioMain()).doOnNext(bitmap -> {
             if (null == bitmap) return;
