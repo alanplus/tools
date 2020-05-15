@@ -1,5 +1,6 @@
 package com.android.tools.statusbar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -60,7 +61,13 @@ public class StatusBarTools implements IStatusBarTools {
     }
 
 
+    @SuppressLint("PrivateApi")
     public static boolean isMiUI() {
+        try {
+            Class.forName("android.view.MiuiWindowManager$LayoutParams");
+        } catch (Exception e) {
+            return false;
+        }
         return Build.MANUFACTURER.equals("Xiaomi");
     }
 
