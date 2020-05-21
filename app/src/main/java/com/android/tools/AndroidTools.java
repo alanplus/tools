@@ -87,30 +87,31 @@ public class AndroidTools {
         DisplayMetrics metric = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(metric);
-        Display display = wm.getDefaultDisplay();
-
-        //4.0之前的SDK直接返回当前metric
-        if (Build.VERSION.SDK_INT < 14) {
-            return metric;
-        }
-
-        int rawWidth = metric.widthPixels;
-        int rawHeight = metric.heightPixels;
-        try {
-            Method mGetRawH = Display.class.getMethod("getRawHeight");
-            Method mGetRawW = Display.class.getMethod("getRawWidth");
-            rawWidth = (Integer) mGetRawW.invoke(display);
-            rawHeight = (Integer) mGetRawH.invoke(display);
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        }
-        metric.widthPixels = rawWidth;
-        metric.heightPixels = rawHeight;
-
         return metric;
+//        Display display = wm.getDefaultDisplay();
+
+//        //4.0之前的SDK直接返回当前metric
+//        if (Build.VERSION.SDK_INT < 14) {
+//            return metric;
+//        }
+//
+//        int rawWidth = metric.widthPixels;
+//        int rawHeight = metric.heightPixels;
+//        try {
+//            Method mGetRawH = Display.class.getMethod("getRawHeight");
+//            Method mGetRawW = Display.class.getMethod("getRawWidth");
+//            rawWidth = (Integer) mGetRawW.invoke(display);
+//            rawHeight = (Integer) mGetRawH.invoke(display);
+//        } catch (SecurityException e) {
+//        } catch (NoSuchMethodException e) {
+//        } catch (IllegalArgumentException e) {
+//        } catch (IllegalAccessException e) {
+//        } catch (InvocationTargetException e) {
+//        }
+//        metric.widthPixels = rawWidth;
+//        metric.heightPixels = rawHeight;
+
+
     }
 
     public static String getMetaData(Context context, String key) {

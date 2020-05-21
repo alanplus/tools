@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.tools.AndroidToolsConfig;
-import com.android.tools.StatusBarUtil;
 import com.android.tools.dialog.LoadingDialog;
 import com.android.tools.rx.RxManager;
+import com.android.tools.statusbar.StatusBarTools;
 import com.android.tools.widget.ToastManager;
 import com.android.tools.widget.state.IStateViewListener;
 
@@ -70,15 +70,15 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void initStatuBar() {
         if (isOnlyTranslateMode()) {
-            isTranslucent = StatusBarUtil.translucent(this);
+            isTranslucent = StatusBarTools.translucent(this);
             return;
         }
 
-        if (isNeedStatusBarLightMode() && StatusBarUtil.setStatusbarTextColor(this) != 0) {
+        if (isNeedStatusBarLightMode() && StatusBarTools.getStatusBarTools().setStatusBarColor(this,false)) {
             if (isNeedTranslateMode()) {
                 onChangeTitlebarColor();
             } else {
-                StatusBarUtil.setStatusBarColor(this, AndroidToolsConfig.androidToolsConfig.getStatusBarColor());
+                StatusBarTools.getStatusBarTools().setStatusBarColor(this,AndroidToolsConfig.androidToolsConfig.getStatusBarColor(),true);
             }
         }
     }

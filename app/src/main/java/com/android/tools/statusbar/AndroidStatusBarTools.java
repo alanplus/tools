@@ -52,7 +52,7 @@ public class AndroidStatusBarTools implements IStatusBarTools {
     public boolean setStatusBarColor(Activity activity, boolean isWhite) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return false;
         if (!isWhite)
-            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         return true;
     }
 
