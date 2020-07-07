@@ -451,7 +451,7 @@ public class OkHttpUtil {
     }
 
     private static File createDefaultFile(Context context) {
-        String path = "/data/data/" + context.getPackageName() + "/temp/";
+        String path = getDir(context) + "/temp/";
 
         File f = new File(path);
         if (!f.exists()) {
@@ -466,6 +466,14 @@ public class OkHttpUtil {
         } catch (IOException ignored) {
         }
         return file;
+    }
+
+    public static String getDir(Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return context.getDataDir().getAbsolutePath();
+        } else {
+            return "/data/data/" + context.getPackageName();
+        }
     }
 
     @SuppressWarnings("resource")

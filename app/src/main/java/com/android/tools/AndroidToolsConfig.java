@@ -5,8 +5,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 
+import com.android.tools.net.OkHttpUtil;
+
 import java.io.File;
 import java.util.HashMap;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Mouse on 2018/10/18.
@@ -46,7 +50,7 @@ public abstract class AndroidToolsConfig {
     }
 
     public String getDownloadTempPath() {
-        String path = "/data/data/" + context.getPackageName() + "/temp/";
+        String path = OkHttpUtil.getDir(context) + "/temp/";
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
