@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +117,8 @@ public class OkHttpUtil {
             if (response.isSuccessful()) {
                 String responseUrl = response.body().string();
                 Logger.d("data:" + responseUrl);
-                return responseUrl;
+                throw new SocketException("connection reset");
+//                return responseUrl;
             }
         } catch (Exception e) {
             handlerException(e);
