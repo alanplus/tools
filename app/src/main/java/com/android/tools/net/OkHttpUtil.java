@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.tools.AndroidToolsConfig;
 import com.android.tools.FileTools;
 import com.android.tools.Logger;
 
@@ -84,7 +85,7 @@ public class OkHttpUtil {
 
             @Override
             public void onFailure(Call call, IOException e) {
-
+                handlerException(e);
             }
 
             @Override
@@ -93,6 +94,12 @@ public class OkHttpUtil {
             }
 
         });
+    }
+
+    public static void handlerException(Exception e) {
+        if (AndroidToolsConfig.androidToolsConfig != null && AndroidToolsConfig.androidToolsConfig.getOnExceptionListener() != null) {
+            AndroidToolsConfig.androidToolsConfig.getOnExceptionListener().onExceptionListener(e);
+        }
     }
 
     /**
@@ -112,6 +119,7 @@ public class OkHttpUtil {
                 return responseUrl;
             }
         } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
@@ -131,19 +139,7 @@ public class OkHttpUtil {
     }
 
     private static RequestBody getPostBuilder(HashMap<String, String> params) {
-//        Request.Builder builder = new Request.Builder();
         return RequestBody.create(MEDIA_TYPE_APPLICATION, getContentFromMap(params));
-//        FormEncodingBuilder fe = new FormEncodingBuilder();
-//        if (null == params)
-//            return fe.build();
-//        Set<String> keys = params.keySet();
-//        for (String key : keys) {
-//            String value = params.get(key);
-//            if (value != null) {
-//                fe.add(key, value);
-//            }
-//        }
-//        return fe.build();
     }
 
     /**
@@ -166,6 +162,7 @@ public class OkHttpUtil {
             Logger.d("data:" + string);
             return string;
         } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
@@ -198,6 +195,7 @@ public class OkHttpUtil {
             Logger.d("result:" + string);
             return string;
         } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
@@ -231,6 +229,7 @@ public class OkHttpUtil {
     public static String uploadFileByPost(String url, File file, HashMap<String, String> map) {
         OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
         builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        builderClient.hostnameVerifier((hostname, session) -> true);
         OkHttpClient client = builderClient.build();
 
         MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -251,16 +250,16 @@ public class OkHttpUtil {
             if (null != response) {
                 return response.body().string();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
 
     public static String uploadAudioFileByPost(String url, File file, HashMap<String, String> map) {
-        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
-        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        OkHttpClient client = builderClient.build();
+//        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
+//        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
+//        OkHttpClient client = builderClient.build();
 
 
         MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -275,12 +274,12 @@ public class OkHttpUtil {
                 .post(requestBody)// 添加请求体
                 .build();
         try {
-            Response response = client.newCall(request).execute();
+            Response response = mOkHttpClient.newCall(request).execute();
             if (null != response) {
                 return response.body().string();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
@@ -288,10 +287,6 @@ public class OkHttpUtil {
     public static String uploadFileByPost(String url, File file) {
 
         String content = "";
-        OkHttpClient.Builder builderClient = new OkHttpClient.Builder();
-        builderClient.connectTimeout(5 * NETWORK_TIMEOUT, TimeUnit.SECONDS);
-        OkHttpClient client = builderClient.build();
-
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
         builder.addFormDataPart("name", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
@@ -307,7 +302,7 @@ public class OkHttpUtil {
                 return string;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            handlerException(e);
         }
         return null;
     }
@@ -329,6 +324,7 @@ public class OkHttpUtil {
                 return BitmapFactory.decodeStream(in);
             }
         } catch (Exception e) {
+            handlerException(e);
         }
         return null;
     }
@@ -362,6 +358,7 @@ public class OkHttpUtil {
             clearFile(path, name);
             return file.renameTo(new File(path, name));
         } catch (Exception e) {
+            handlerException(e);
         }
         return false;
     }
@@ -388,7 +385,8 @@ public class OkHttpUtil {
             out.close();
             File file1 = new File(name);
             return file1.exists() || file.renameTo(new File(name));
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            handlerException(e);
         }
         return false;
     }
@@ -425,6 +423,7 @@ public class OkHttpUtil {
             clearFile(path, name);
             return file.renameTo(new File(path, name));
         } catch (Exception e) {
+            handlerException(e);
 //            Log.d("test_error","message:"+e.getMessage());
         }
         return false;
@@ -513,17 +512,18 @@ public class OkHttpUtil {
             file.renameTo(file1);
             return true;
         } catch (IOException e) {
+            handlerException(e);
 
         }
         return false;
     }
 
     public static OkHttpClient newOkHttpClient() {
-
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.writeTimeout(1, TimeUnit.HOURS);
         client.readTimeout(1, TimeUnit.HOURS);
         client.connectTimeout(1, TimeUnit.HOURS);
+        client.hostnameVerifier((hostname, session) -> true);
         return client.build();
     }
 

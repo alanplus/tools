@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 
+import com.android.tools.api.OnExceptionListener;
 import com.android.tools.net.OkHttpUtil;
 
 import java.io.File;
@@ -61,5 +62,7 @@ public abstract class AndroidToolsConfig {
     public int getStatusBarColor() {
         return Color.WHITE;
     }
+
+    public abstract OnExceptionListener getOnExceptionListener();
 
 }
