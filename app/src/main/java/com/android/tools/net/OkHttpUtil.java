@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -46,6 +49,7 @@ public class OkHttpUtil {
         builder.readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
         builder.writeTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
         builder.connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS);
+        builder.hostnameVerifier((hostname, session) -> true);
         mOkHttpClient = builder.build();
     }
 
