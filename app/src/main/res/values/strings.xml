@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidTools</string>
+    <bool name="tools_is_white">true</bool>
 </resources>

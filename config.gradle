@@ -1,0 +1,64 @@
+ext {
+    android = [
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            minSdkVersion    : 15,
+            targetSdkVersion : 26
+    ]
+
+
+    supportLibrary = "28.0.0"
+
+    suportDependencies = [
+            supportAppcompat    : "com.android.support:appcompat-v7:${supportLibrary}",
+            supportV4           : "com.android.support:support-v4:${supportLibrary}",
+            supportDesign       : "com.android.support:design:${supportLibrary}",
+            supportRecycleView  : "com.android.support:recyclerview-v7:${supportLibrary}",
+            supportConstraint   : "com.android.support.constraint:constraint-layout:1.1.3",
+            supportMultidex     : "com.android.support:multidex:1.0.3",
+
+            glide               : "com.github.bumptech.glide:glide:3.7.0",
+            eventbus            : "org.greenrobot:eventbus:3.0.0",
+            rxjava              : "io.reactivex.rxjava2:rxjava:2.0.2",
+            rxandroid           : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            rxpermissions       : "com.github.tbruyelle:rxpermissions:0.10.2@aar",
+            rxbinding           : "com.jakewharton.rxbinding2:rxbinding:2.0.0",
+            jetbrainsAnnotations: "org.jetbrains:annotations:15.0",
+            gson                : "com.google.code.gson:gson:2.7",
+            okhttp              : "com.squareup.okhttp3:okhttp:3.10.0",
+            okio                : "com.squareup.okio:okio:1.14.0",
+            // 自定义 组件
+            titleBar            : "com.github.alanplus:lib-TitleBar:1.3",
+            StateLayout         : "com.github.alanplus:lib-StateLayout:1.1",
+//            SwipeRecyclerView   : "com.github.alanplus:SwipeRecyclerView:2.0",
+            XmRecycleView       : "com.github.alanplus:lib-recycleview:0.9.2",
+            CBprogressBar       : "com.github.alanplus:CBprogressBar:1.1",
+            Corner              : "com.github.alanplus:Corner:1.4",
+            Audio               : "com.gitee.alanplus:Lib-Audio:2.1",
+            overscroll          : "com.github.alanplus:lib-overscroll:1.0",
+            WheelView           : "com.github.alanplus:Lib-WheelView:1.1",
+            ViewpagerTransformer: 'com.github.alanplus:ViewpagerTransformer:V1.0',
+            // 自定义框架
+            RxExecutor          : "com.github.alanplus:RxExecutor:1.2",
+            nevercrash          : "com.king.thread:nevercrash:1.0.0",
+            httplib             : "com.github.alanplus:httplib:1.3.2",
+            base                : "com.github.alanplus:lib-base:0.2",
+            baseUI              : "com.github.alanplus:lib-baseUI:0.8.3",
+            simpleActivity      : "com.github.alanplus:SimpleActivity:1.2.2",
+            sqlcipher           : "net.zetetic:android-database-sqlcipher:4.0.0@aar",
+            AlanDB              : "com.github.alanplus:Alan-db:1.6.11",
+            // 第三方组件
+            HVScrollView        : "com.shizhefei:HVScrollView:1.0.1",
+            SmartRefreshLayout  : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14",
+            SmartRefreshHeader  : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14",
+            cptr                : "com.chanven.lib:cptr:1.1.0",
+            PhotoView           : "com.github.chrisbanes:PhotoView:1.3.0",
+            CrazyShadow         : "com.github.Hitomis:CrazyShadow:v1.0.1",
+            //友盟库
+            umengCommon         : "com.umeng.sdk:common:1.4.4",
+            umengAnalytics      : "com.umeng.sdk:analytics:7.4.4",
+            //微信库
+            wechat              : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8"
+
+    ]
+}

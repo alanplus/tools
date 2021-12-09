@@ -2,6 +2,7 @@ package com.android.tools.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.tools.AndroidToolsConfig;
+import com.android.tools.R;
 import com.android.tools.dialog.LoadingDialog;
 import com.android.tools.rx.RxManager;
 import com.android.tools.statusbar.StatusBarTools;
@@ -74,13 +76,23 @@ public class BaseActivity extends AppCompatActivity {
             return;
         }
 
-        if (isNeedStatusBarLightMode() && StatusBarTools.getStatusBarTools().setStatusBarColor(this,false)) {
+        boolean isWhite = getResources().getBoolean(R.bool.tools_is_white);
+        if (!isWhite) {
+            setNightStatusBar();
+            return;
+        }
+
+        if (isNeedStatusBarLightMode() && StatusBarTools.getStatusBarTools().setStatusBarColor(this, false)) {
             if (isNeedTranslateMode()) {
                 onChangeTitlebarColor();
             } else {
-                StatusBarTools.getStatusBarTools().setStatusBarColor(this,AndroidToolsConfig.androidToolsConfig.getStatusBarColor(),true);
+                StatusBarTools.getStatusBarTools().setStatusBarColor(this, AndroidToolsConfig.androidToolsConfig.getStatusBarColor(), true);
             }
         }
+    }
+
+    protected void setNightStatusBar() {
+        StatusBarTools.getStatusBarTools().setStatusBarColor(this, Color.parseColor("#111111"));
     }
 
     protected void registEvenBus() {
