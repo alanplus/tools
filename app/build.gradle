@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 28
@@ -55,3 +56,16 @@ dependencies {
 }
 
 
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri('http://116.62.181.66:8081/repository/maven-releases/')) {
+            authentication(userName: 'admin', password: 'admin')
+        }//仓库地址
+        pom.project {
+            groupId 'com.weici.word.detail'
+            artifactId 'word_detail'
+            version '0.0.69'
+            packaging 'aar'
+        }
+    }
+}

@@ -3,15 +3,28 @@
 buildscript {
     
     repositories {
-        mavenCentral()
         jcenter()
-        mavenLocal()
+        maven { url 'https://jitpack.io' }
         google()
+        //maven { url 'https://dl.bintray.com/jetbrains/anko' }
+        //这是你需要加入的，这个是解决这个问题的关键地方，我就是添加这个maven后不再报上面的错误了
+
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven { url 'https://repo1.maven.org/maven2/' }
+        maven {
+            url 'http://116.62.181.66:8081/repository/maven-releases/'
+            credentials {
+                username 'admin'
+                password 'admin'
+            }
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        
-
+        // 添加marven插件
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,8 +32,23 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         jcenter()
+        maven { url 'https://jitpack.io' }
+        google()
+        //maven { url 'https://dl.bintray.com/jetbrains/anko' }
+        //这是你需要加入的，这个是解决这个问题的关键地方，我就是添加这个maven后不再报上面的错误了
+
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven { url 'https://repo1.maven.org/maven2/' }
+        maven {
+            url 'http://116.62.181.66:8081/repository/maven-releases/'
+            credentials {
+                username 'admin'
+                password 'admin'
+            }
+        }
     }
 }
 
